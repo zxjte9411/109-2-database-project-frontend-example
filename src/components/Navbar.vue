@@ -9,30 +9,38 @@
       </div>
     </v-app-bar>
     <v-navigation-drawer permanent floating app dark>
-      <router-link to="/">
+      <a href="/home">
         <img id="logo" src="@/img/logo.png" alt="logo" />
-      </router-link>
+      </a>
       <v-list>
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title>All</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title>single-player</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title>Multiplayer</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title>Battle Game</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <router-link class="my-router-link" to="/home?category=all">
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title>All</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link class="my-router-link" to="/home?category=single">
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title>single-player</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link class="my-router-link" to="/home?category=multi">
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title>Multiplayer</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link class="my-router-link" to="/home?category=battle">
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title>Battle Game</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list>
 
       <template v-slot:append> </template>
@@ -60,5 +68,9 @@ export default {
 <style>
 #logo {
   width: 250px;
+}
+
+.my-router-link {
+  text-decoration: none !important;
 }
 </style>
