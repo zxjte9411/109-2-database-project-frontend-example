@@ -2,6 +2,9 @@
   <div id="app">
     <v-app id="inspire">
       <NavBar />
+      <v-bottom-navigation app absolute dark horizontal>
+        <div class="mt-5"><span>Copyright © GAMLAB</span></div>
+      </v-bottom-navigation>
     </v-app>
   </div>
 </template>
