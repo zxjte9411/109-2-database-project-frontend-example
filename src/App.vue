@@ -2,9 +2,9 @@
   <div id="app">
     <v-app id="inspire">
       <NavBar />
-      <v-bottom-navigation app absolute dark horizontal>
-        <div class="mt-5"><span>Copyright © GAMLAB</span></div>
-      </v-bottom-navigation>
+      <v-footer app absolute dark horizontal class="d-flex justify-center">
+        <span class="my-3">Copyright © GAMLAB</span>
+      </v-footer>
     </v-app>
   </div>
 </template>
