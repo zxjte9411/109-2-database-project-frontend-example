@@ -14,6 +14,9 @@
               @click="test(games[(i - 1) * 3 + n - 1])"
           /></a>
           <v-card-title>{{ games[(i - 1) * 3 + n - 1].Name }}</v-card-title>
+          <v-card-subtitle class="text-start">
+            NT$ {{ games[(i - 1) * 3 + n - 1].Price }}
+          </v-card-subtitle>
           <v-card-text>
             <div class="text-left">
               {{ games[(i - 1) * 3 + n - 1].Description }}
