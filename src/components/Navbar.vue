@@ -4,7 +4,7 @@
       <v-spacer></v-spacer>
       <div class="pa-2">
         <v-btn block>
-          Logout
+          <router-link class="my-router-link" to="/login">login</router-link>
         </v-btn>
       </div>
     </v-app-bar>
