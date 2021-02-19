@@ -3,7 +3,7 @@ const state = {
   user: {
     role: "",
     email: "",
-    phpssid: ""
+    cookies: ""
   }
 };
 const actions = {
@@ -13,8 +13,8 @@ const actions = {
   setEmail({ commit }, email) {
     commit("setEmail", email);
   },
-  setPhpssid({ commit }, ssid) {
-    commit("setPhpssid", ssid);
+  setCookies({ commit }, cookies) {
+    commit("setCookies", cookies);
   },
   async login({ commit }, [email, pwd]) {
     const result = await handleLoginResponse(commit, Login(email, pwd));
@@ -35,21 +35,24 @@ const mutations = {
   setEmail(state, email) {
     state.email = email;
   },
-  setPhpssid(state, ssid) {
-    state.phpssid = ssid;
+  setCookies(state, cookies) {
+    state.phpssid = cookies;
   }
 };
 const getters = {
   Role: state => state.role,
   Email: state => state.email,
-  Phpssid: state => state.phpssid
+  Phpssid: state => state.cookies
 };
 
 const handleLoginResponse = async (commit, res) => {
   res = await res;
+  let allCookies = document.cookie;
+  console.log(allCookies);
   const data = res.data;
   if (data.msg !== "success") return false;
   commit("setRole", data.userrole);
+  commit("setCookies", data.allCookies);
   return true;
 };
 
