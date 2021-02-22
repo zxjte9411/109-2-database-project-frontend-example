@@ -1,12 +1,21 @@
 import { Login } from "@/api/login.js";
-const state = {
-  user: {
-    role: "",
-    email: "",
-    cookies: ""
-  }
+const getDefaultState = () => {
+  return localStorage.getItem("user")
+    ? { user: JSON.parse(localStorage.getItem("user")) }
+    : {
+        user: {
+          role: "",
+          email: "",
+          cookies: "",
+          isLogin: false
+        }
+      };
 };
+const state = getDefaultState();
 const actions = {
+  resetCartState({ commit }) {
+    commit("resetCartState");
+  },
   setRole({ commit }, role) {
     commit("setRole", role);
   },
@@ -16,44 +25,60 @@ const actions = {
   setCookies({ commit }, cookies) {
     commit("setCookies", cookies);
   },
+  setIsLogin({ commit }) {
+    commit("setIsLogin");
+  },
   async login({ commit }, [email, pwd]) {
     const result = await handleLoginResponse(commit, Login(email, pwd));
     return new Promise((resolve, reject) => {
       if (result) {
         commit("setEmail", email);
+        commit("setIsLogin", true);
+        localStorage.setItem("user", JSON.stringify(state.user));
         resolve();
       } else {
+        commit("resetCartState");
         reject("email or password error");
       }
     });
+  },
+  logout({ commit }) {
+    localStorage.removeItem("user");
+    commit("resetCartState");
   }
 };
 const mutations = {
+  resetCartState(state) {
+    Object.assign(state, getDefaultState());
+  },
   setRole(state, role) {
-    state.role = role;
+    state.user.role = role;
   },
   setEmail(state, email) {
-    state.email = email;
+    state.user.email = email;
   },
   setCookies(state, cookies) {
-    state.phpssid = cookies;
+    state.user.cookies = cookies;
+  },
+  setIsLogin(state, isLogin) {
+    state.user.isLogin = isLogin;
   }
 };
 const getters = {
-  Role: state => state.role,
-  Email: state => state.email,
-  Phpssid: state => state.cookies
+  Role: state => state.user.role,
+  Email: state => state.user.email,
+  Phpssid: state => state.user.cookies,
+  IsLogin: state => state.user.isLogin
 };
 
 const handleLoginResponse = async (commit, res) => {
   res = await res;
   let allCookies = document.cookie;
-  console.log(allCookies);
   const data = res.data;
   if (data.msg !== "success") return false;
   commit("setRole", data.userrole);
-  commit("setCookies", data.allCookies);
+  commit("setCookies", allCookies);
   return true;
 };
 
-export default { state, actions, mutations, getters };
+export default { namespced: true, state, actions, mutations, getters };

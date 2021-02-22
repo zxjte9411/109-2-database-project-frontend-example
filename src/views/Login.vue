@@ -53,7 +53,7 @@ export default {
       isRoading: false,
       passwordRules: [
         v => !!v || "Password is required",
-        v => (v && v.length <= 8) || "password must be more than 8 characters"
+        v => (v && v.length >= 5) || "password must be more than 5 characters"
       ],
       emailRules: [
         v => !!v || "E-mail is required",
@@ -67,8 +67,7 @@ export default {
         this.isRoading = true;
         await this.$store
           .dispatch("login", [this.user.email, this.user.password])
-          .then(res => {
-            console.log(res);
+          .then(() => {
             this.$router.push("/home");
           })
           .catch(err => {

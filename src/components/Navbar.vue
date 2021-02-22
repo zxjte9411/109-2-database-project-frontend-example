@@ -3,11 +3,14 @@
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
       <div class="pa-2">
-        <router-link class="my-router-link" to="/login">
+        <router-link v-if="!isLogin" class="my-router-link" to="/login">
           <v-btn block>
             login
           </v-btn>
         </router-link>
+        <v-btn v-if="isLogin" block @click="logout">
+          Logout
+        </v-btn>
       </div>
     </v-app-bar>
     <v-navigation-drawer permanent floating app dark>
@@ -54,6 +57,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -63,6 +67,17 @@ export default {
         { title: "Admin", icon: "mdi-gavel" }
       ]
     };
+  },
+  computed: {
+    ...mapGetters({ isLogin: "IsLogin" })
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/home").catch(err => {
+        err;
+      });
+    }
   }
 };
 </script>
