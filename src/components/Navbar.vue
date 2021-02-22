@@ -3,9 +3,11 @@
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
       <div class="pa-2">
-        <v-btn block>
-          <router-link class="my-router-link" to="/login">login</router-link>
-        </v-btn>
+        <router-link class="my-router-link" to="/login">
+          <v-btn block>
+            login
+          </v-btn>
+        </router-link>
       </div>
     </v-app-bar>
     <v-navigation-drawer permanent floating app dark>
