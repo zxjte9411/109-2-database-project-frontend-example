@@ -2,7 +2,10 @@
   <div>
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
-      <div class="pa-2">
+      <router-link v-if="isLogin" class="my-router-link" to="/shoppingcart">
+        <v-btn block>Shopping Cart</v-btn>
+      </router-link>
+      <div class="pa-2 d-flex flex-row">
         <router-link v-if="!isLogin" class="my-router-link" to="/login">
           <v-btn block>
             login
@@ -73,7 +76,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch("login/logout");
       this.$router.push("/home").catch(err => {
         err;
       });
