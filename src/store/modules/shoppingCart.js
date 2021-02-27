@@ -30,6 +30,11 @@ const getters = {
         quantity
       };
     });
+  },
+  CartTotalPrice: (state, getters) => {
+    return getters.CartItems.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    });
   }
 };
 
