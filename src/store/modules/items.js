@@ -20,4 +20,4 @@ const mutations = {
 
 const getters = {};
 
-export default { namespced: true, state, actions, mutations, getters };
+export default { namespaced: true, state, actions, mutations, getters };

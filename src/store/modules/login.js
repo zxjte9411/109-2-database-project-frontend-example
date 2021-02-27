@@ -81,4 +81,4 @@ const handleLoginResponse = async (commit, res) => {
   return true;
 };
 
-export default { namespced: true, state, actions, mutations, getters };
+export default { namespaced: true, state, actions, mutations, getters };
