@@ -69,7 +69,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ isLogin: "IsLogin" })
+    ...mapGetters({ isLogin: "login/IsLogin" })
   },
   methods: {
     logout() {
