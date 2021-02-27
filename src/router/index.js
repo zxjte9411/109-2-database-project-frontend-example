@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
-import Cart from "@/views/Cart.vue";
+import ShoppingCart from "@/views/ShoppingCart.vue";
 
 Vue.use(VueRouter);
 
@@ -18,9 +18,9 @@ const routes = [
     component: Login
   },
   {
-    path: "/cart",
-    name: "Cart",
-    component: Cart
+    path: "/shoppingcart",
+    name: "ShoppingCart",
+    component: ShoppingCart
   },
   {
     path: "/",

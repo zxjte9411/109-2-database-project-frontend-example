@@ -20,7 +20,7 @@ const mutations = {
 };
 
 const getters = {
-  CartItems(state, getters, rootState) {
+  CartItems: (state, getters, rootState) => {
     return state.items.map(({ id, quantity }) => {
       const product = rootState.products.all.find(product => product.id === id);
       return {
