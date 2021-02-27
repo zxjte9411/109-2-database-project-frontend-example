@@ -66,7 +66,7 @@ export default {
       if (this.$refs.form && this.$refs.form.validate()) {
         this.isRoading = true;
         await this.$store
-          .dispatch("login", [this.user.email, this.user.password])
+          .dispatch("login/login", [this.user.email, this.user.password])
           .then(() => {
             this.$router.push("/home");
           })
