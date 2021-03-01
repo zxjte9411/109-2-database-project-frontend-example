@@ -2,6 +2,7 @@
   <v-main class="mb-10">
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
+      <a v-if="isLogin" class="text-h6 moneyInfo">【{{ moneyInfo }}】</a>
       <router-link
         v-if="isLogin"
         class="my-router-link mr-3"
@@ -72,13 +73,20 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { GetwalletOrProfit } from "@/api/walletOrProfit";
+
 export default {
   data() {
-    return {};
+    return {
+      moneyInfo: ""
+    };
   },
   computed: {
     ...mapGetters({ isLogin: "login/IsLogin" }),
     ...mapGetters({ CartItemLength: "shoppingCart/CartItemLength" })
+  },
+  async created() {
+    this.moneyInfo = await GetwalletOrProfit();
   },
   methods: {
     logout() {
@@ -98,5 +106,10 @@ export default {
 
 .my-router-link {
   text-decoration: none !important;
+}
+
+.moneyInfo {
+  text-decoration: none !important;
+  color: white !important;
 }
 </style>
