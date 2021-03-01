@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import ShoppingCart from "@/views/ShoppingCart.vue";
+import Deposit from "@/views/Deposit.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/shoppingcart",
     name: "ShoppingCart",
     component: ShoppingCart
+  },
+  {
+    path: "/deposit",
+    name: "Deposit",
+    component: Deposit
   },
   {
     path: "/",
