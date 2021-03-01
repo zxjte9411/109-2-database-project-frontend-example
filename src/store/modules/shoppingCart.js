@@ -16,8 +16,6 @@ const actions = {
     commit("resetCartState");
   },
   addProductToCart({ state, commit }, game) {
-    console.log(state.items);
-    console.log(game);
     commit("setCheckoutStatus", null);
     if (game.inventory > 0) {
       const cartItem = state.items.find(item => item.id === game.Game_No);
@@ -54,6 +52,16 @@ const mutations = {
     const cartItem = state.items.find(item => item.id === id);
     cartItem.quantity++;
     localStorage.setItem("cart", JSON.stringify(state.items));
+  },
+  decrementItemQuantity(state, { id }) {
+    const cartItem = state.items.find(item => item.id === id);
+    cartItem.quantity--;
+    localStorage.setItem("cart", JSON.stringify(state.items));
+  },
+  remoItemFromShoopingCart(state, { id }) {
+    const cartItem = state.items.find(item => item.id === id);
+    state.items.splice(state.items.indexOf(cartItem), 1);
+    localStorage.setItem("cart", JSON.stringify(state.items));
   }
 };
 
@@ -61,7 +69,7 @@ const getters = {
   CartItems: (state, getters, rootState) => {
     if (rootState.games.items.length <= 0) return [];
     return state.items.map(({ id, quantity }) => {
-      const product = rootState.games.items.find(gmae => gmae.Game_No === id);
+      const product = rootState.games.items.find(game => game.Game_No === id);
       return {
         id: product.Game_No,
         title: product.Name,

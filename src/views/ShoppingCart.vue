@@ -1,12 +1,18 @@
 <template>
   <v-container fluid fill-height class="d-flex justify-start">
     <v-row class="mt-10">
-      <v-card class="mx-auto" outlined>
+      <v-card v-if="!isLoading" class="mx-auto" outlined>
         <template v-for="(game, index) in cartItems">
           <v-list-item :key="index">
             <v-row class="my-1">
               <v-col cols="1" align-self="center">
-                <v-btn fab small depressed color="error">
+                <v-btn
+                  fab
+                  small
+                  depressed
+                  color="error"
+                  @click="remoItemFromShoopingCart(game)"
+                >
                   <v-icon>mdi-trash-can-outline</v-icon>
                 </v-btn>
               </v-col>
@@ -17,7 +23,12 @@
                 <h4>{{ game.title }}</h4>
                 <span>NT$ {{ game.price }}</span>
                 <div class="input-group d-flex align-start">
-                  <v-btn class="my-btn" depressed @click="decrease(game)">
+                  <v-btn
+                    class="my-btn"
+                    depressed
+                    :disabled="game.quantity === 1"
+                    @click="decrease(game)"
+                  >
                     <v-icon>mdi-minus</v-icon>
                   </v-btn>
                   <input
@@ -51,23 +62,19 @@
 
 <script>
 import { imgageHost } from "@/config/config";
-import { mapGetters /*mapMutations*/ } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   data() {
-    return {};
+    return { isLoading: true };
   },
   computed: {
-    games: {
-      get() {
-        return this.$store.state.shoppingCart.items;
-      },
-      set() {}
-    },
+    ...mapGetters({ games: "games/Items" }),
     ...mapGetters({ GetItemSubTotal: "shoppingCart/GetItemSubTotal" }),
     ...mapGetters({ cartItems: "shoppingCart/CartItems" })
   },
   async created() {
     await this.$store.dispatch("games/getAllGames");
+    this.isLoading = false;
   },
   methods: {
     getImagePath(filename = "") {
@@ -77,7 +84,10 @@ export default {
       this.$store.commit("shoppingCart/incrementItemQuantity", game);
     },
     decrease(game) {
-      this.$store.commit("shoppingCart/incrementItemQuantity", game);
+      this.$store.commit("shoppingCart/decrementItemQuantity", game);
+    },
+    remoItemFromShoopingCart(game) {
+      this.$store.commit("shoppingCart/remoItemFromShoopingCart", game);
     }
   }
 };
