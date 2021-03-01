@@ -1,6 +1,6 @@
 <template>
-  <v-container fill-height fluid class="d-flex align-center mb-10">
-    <v-row class="mt-10 d-flex align-center justify-center">
+  <v-container fill-height fluid class="d-flex align-center">
+    <v-row class="d-flex justify-center">
       <v-col cols="4">
         <div class="text-h3 text-left my-3">Login</div>
         <v-form
