@@ -1,18 +1,14 @@
 <template>
-  <v-container fluid fill-height class="d-flex justify-start">
-    <v-row>
+  <v-container fluid fill-height class="d-flex align-start">
+    <v-row v-if="isLoading">
       <v-col cols="8" offset="2">
         <Loading :is-loading="isLoading" />
       </v-col>
     </v-row>
-    <div v-if="!isLoading">
-      <v-row v-for="i in rowSize" :key="i" class="d-flex justify-start">
-        <v-col
-          v-for="n in getColoumNumber(i)"
-          :key="n"
-          class="d-flex justify-start"
-        >
-          <v-card class="mx-12 my-12" max-width="380" max-height="500">
+    <template v-if="!isLoading">
+      <v-row v-for="i in rowSize" :key="i">
+        <v-col v-for="n in getColoumNumber(i)" :key="n">
+          <v-card class="mx-auto my-12" max-width="380" max-height="500">
             <a
               ><v-img
                 height="250"
@@ -41,7 +37,7 @@
           </v-card>
         </v-col>
       </v-row>
-    </div>
+    </template>
   </v-container>
 </template>
 

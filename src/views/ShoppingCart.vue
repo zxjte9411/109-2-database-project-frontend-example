@@ -1,81 +1,82 @@
 <template>
-  <v-container fluid fill-height class="d-flex justify-start">
-    <v-row class="mt-5">
-      <v-col offset="2" class="text-left">
-        <h1>Shopping Cart</h1>
-      </v-col>
-    </v-row>
+  <v-container fluid fill-height class="d-flex align-start">
+    <v-row v-if="!isLoading" class="mt-5">
+      <v-col class="text-left">
+        <v-row>
+          <v-col offset="2">
+            <h1>Shopping Cart</h1>
+          </v-col>
+        </v-row>
+        <v-card class="mt-3 mx-auto" outlined max-width="850">
+          <v-list-item v-if="cartItems.length === 0">
+            <v-banner class="my-banner">
+              Your Cart is empty
+            </v-banner>
+          </v-list-item>
 
-    <v-row class="mt-5">
-      <v-card v-if="!isLoading" class="mx-auto" outlined max-width="850">
-        <v-list-item v-if="cartItems.length === 0">
-          <v-banner class="my-banner">
-            Your Cart is empty
-          </v-banner>
-        </v-list-item>
-
-        <template v-for="(game, index) in cartItems">
-          <v-list-item :key="index">
-            <v-row class="my-1">
-              <v-col cols="1" align-self="center">
-                <v-btn
-                  fab
-                  small
-                  depressed
-                  color="error"
-                  @click="remoItemFromShoopingCart(game)"
-                >
-                  <v-icon>mdi-trash-can-outline</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="3">
-                <v-img :src="getImagePath(game.imageUrl)"></v-img>
-              </v-col>
-              <v-col cols="5" class="text-left">
-                <h4>{{ game.title }}</h4>
-                <span>NT$ {{ game.price }}</span>
-                <div class="input-group d-flex align-start">
+          <template v-for="(game, index) in cartItems">
+            <v-list-item :key="index">
+              <v-row class="my-1">
+                <v-col cols="1" align-self="center">
                   <v-btn
-                    class="my-btn"
+                    fab
+                    small
                     depressed
-                    :disabled="game.quantity === 1"
-                    @click="decrease(game)"
+                    color="error"
+                    @click="remoItemFromShoopingCart(game)"
                   >
-                    <v-icon>mdi-minus</v-icon>
+                    <v-icon>mdi-trash-can-outline</v-icon>
                   </v-btn>
-                  <input
-                    class="form-control text-center"
-                    type="text"
-                    readonly
-                    min="1"
-                    :value="game.quantity"
-                  />
-                  <v-btn class="my-btn" depressed @click="increment(game)">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                </div>
-              </v-col>
-              <v-col cols="3">
-                <div class="mt-3 text-right">
-                  <span>NT$ {{ GetItemSubTotal(game) }}</span>
-                </div>
+                </v-col>
+                <v-col cols="3">
+                  <v-img :src="getImagePath(game.imageUrl)"></v-img>
+                </v-col>
+                <v-col cols="5" class="text-left">
+                  <h4>{{ game.title }}</h4>
+                  <span>NT$ {{ game.price }}</span>
+                  <div class="input-group d-flex align-start">
+                    <v-btn
+                      class="my-btn"
+                      depressed
+                      :disabled="game.quantity === 1"
+                      @click="decrease(game)"
+                    >
+                      <v-icon>mdi-minus</v-icon>
+                    </v-btn>
+                    <input
+                      class="form-control text-center"
+                      type="text"
+                      readonly
+                      min="1"
+                      :value="game.quantity"
+                    />
+                    <v-btn class="my-btn" depressed @click="increment(game)">
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                  </div>
+                </v-col>
+                <v-col cols="3">
+                  <div class="mt-3 text-right">
+                    <span>NT$ {{ GetItemSubTotal(game) }}</span>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-list-item>
+            <v-divider
+              v-if="index < games.length"
+              :key="index + Date.now()"
+            ></v-divider>
+          </template>
+
+          <v-list-item>
+            <v-row>
+              <v-col class="text-right">
+                <strong>Total：</strong><span>NT$ {{ CartTotalPrice }}</span>
               </v-col>
             </v-row>
           </v-list-item>
-          <v-divider
-            v-if="index < games.length"
-            :key="index + Date.now()"
-          ></v-divider>
-        </template>
-
-        <v-list-item>
-          <v-row>
-            <v-col class="text-right">
-              <strong>Total：</strong><span>NT$ {{ CartTotalPrice }}</span>
-            </v-col>
-          </v-row>
-        </v-list-item>
-      </v-card>
+        </v-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>

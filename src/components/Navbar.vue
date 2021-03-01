@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-main class="mb-10">
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
       <router-link
@@ -7,8 +7,16 @@
         class="my-router-link mr-3"
         to="/shoppingcart"
       >
-        <v-badge :content="CartItemLength" :value="CartItemLength" overlap>
-          <v-btn block>Shopping Cart</v-btn>
+        <v-badge
+          v-if="true"
+          :content="CartItemLength"
+          :value="CartItemLength"
+          overlap
+        >
+          <v-btn block>
+            <v-icon>mdi-cart-arrow-down</v-icon>
+            Shopping Cart
+          </v-btn>
         </v-badge>
       </router-link>
       <div class="pa-2 d-flex flex-row">
@@ -56,26 +64,17 @@
           </v-list-item>
         </router-link>
       </v-list>
-
-      <template v-slot:append> </template>
     </v-navigation-drawer>
-    <v-main class="mb-10">
-      <router-view />
-    </v-main>
-  </div>
+
+    <router-view />
+  </v-main>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 export default {
   data() {
-    return {
-      items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
-        { title: "Account", icon: "mdi-account-box" },
-        { title: "Admin", icon: "mdi-gavel" }
-      ]
-    };
+    return {};
   },
   computed: {
     ...mapGetters({ isLogin: "login/IsLogin" }),
