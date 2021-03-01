@@ -4,6 +4,9 @@ import router from "./router";
 import store from "./store";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
