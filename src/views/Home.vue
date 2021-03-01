@@ -25,7 +25,11 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="deep-purple lighten-2" text>
+            <v-btn
+              color="deep-purple lighten-2"
+              text
+              @click="test(games[(i - 1) * 3 + n - 1])"
+            >
               Add to Cart
             </v-btn>
           </v-card-actions>
@@ -37,17 +41,23 @@
 
 <script>
 // @ is an alias to /src
-import { GetGamesByCategory } from "@/api/home.js";
 import { imgageHost } from "@/config/config";
 
 export default {
   name: "Home",
   data() {
     return {
-      games: [],
       rowSize: 0,
       category: this.$route.query.category
     };
+  },
+  computed: {
+    games: {
+      get() {
+        return this.$store.state.games.items;
+      },
+      set() {}
+    }
   },
   watch: {
     $route: async function() {
@@ -60,7 +70,7 @@ export default {
   },
   methods: {
     async loadData() {
-      this.games = (await GetGamesByCategory(this.category)).data.data;
+      await this.$store.dispatch("games/getAllGames", this.category);
       this.rowSize = this.games.length < 3 ? 1 : this.games.length / 3;
     },
     getImagePath(filename = "") {
@@ -73,7 +83,8 @@ export default {
       else return length - index * 3;
     },
     test(game) {
-      console.log(game);
+      // console.log(game);
+      this.$store.dispatch("shoppingCart/addProductToCart", game);
     }
   }
 };

@@ -2,8 +2,8 @@
   <v-container fluid fill-height class="d-flex justify-start">
     <v-row class="mt-10">
       <v-card class="mx-auto" outlined>
-        <template v-for="i in 5">
-          <v-list-item :key="i">
+        <template v-for="(game, index) in cartItems">
+          <v-list-item :key="index">
             <v-row class="my-1">
               <v-col cols="1" align-self="center">
                 <v-btn fab small depressed color="error">
@@ -11,13 +11,11 @@
                 </v-btn>
               </v-col>
               <v-col cols="3">
-                <v-img
-                  src="http://localhost:5000/img/Cyberpunk%202077.jpg"
-                ></v-img>
+                <v-img :src="getImagePath(game.imageUrl)"></v-img>
               </v-col>
               <v-col cols="6" class="text-left">
-                <h4>Name</h4>
-                <span>NT$350</span>
+                <h4>{{ game.title }}</h4>
+                <span>NT$ {{ game.price }}</span>
                 <div class="input-group d-flex align-start">
                   <v-btn class="my-btn" depressed>
                     <v-icon>mdi-minus</v-icon>
@@ -27,19 +25,24 @@
                     type="text"
                     readonly
                     min="1"
-                    value="1"
+                    :value="game.quantity"
                   />
-                  <v-btn class="my-btn" depressed>
+                  <v-btn class="my-btn" depressed @click="increment(game)">
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
                 </div>
               </v-col>
               <v-col cols="2">
-                <div class="mt-3 text-right"><span>350</span></div>
+                <div class="mt-3 text-right">
+                  <span>{{ GetItemSubTotal(game) }}</span>
+                </div>
               </v-col>
             </v-row>
           </v-list-item>
-          <v-divider v-if="i < 5" :key="i + Date.now()"></v-divider>
+          <v-divider
+            v-if="index < games.length"
+            :key="index + Date.now()"
+          ></v-divider>
         </template>
       </v-card>
     </v-row>
@@ -47,9 +50,32 @@
 </template>
 
 <script>
+import { imgageHost } from "@/config/config";
+import { mapGetters /*mapMutations*/ } from "vuex";
 export default {
   data() {
     return {};
+  },
+  computed: {
+    games: {
+      get() {
+        return this.$store.state.shoppingCart.items;
+      },
+      set() {}
+    },
+    ...mapGetters({ GetItemSubTotal: "shoppingCart/GetItemSubTotal" }),
+    ...mapGetters({ cartItems: "shoppingCart/CartItems" })
+  },
+  async created() {
+    await this.$store.dispatch("games/getAllGames");
+  },
+  methods: {
+    getImagePath(filename = "") {
+      return `${imgageHost}/${filename.replace("./img/", "")}`;
+    },
+    increment(game) {
+      this.$store.commit("shoppingCart/incrementItemQuantity", game);
+    }
   }
 };
 </script>
