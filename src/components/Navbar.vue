@@ -53,7 +53,7 @@
 
       <template v-slot:append> </template>
     </v-navigation-drawer>
-    <v-main>
+    <v-main class="mb-10">
       <router-view />
     </v-main>
   </div>
