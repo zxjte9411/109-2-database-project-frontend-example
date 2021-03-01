@@ -2,8 +2,14 @@
   <div>
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
-      <router-link v-if="isLogin" class="my-router-link" to="/shoppingcart">
-        <v-btn block>Shopping Cart</v-btn>
+      <router-link
+        v-if="isLogin"
+        class="my-router-link mr-3"
+        to="/shoppingcart"
+      >
+        <v-badge :content="CartItemLength" :value="CartItemLength" overlap>
+          <v-btn block>Shopping Cart</v-btn>
+        </v-badge>
       </router-link>
       <div class="pa-2 d-flex flex-row">
         <router-link v-if="!isLogin" class="my-router-link" to="/login">
@@ -72,7 +78,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ isLogin: "login/IsLogin" })
+    ...mapGetters({ isLogin: "login/IsLogin" }),
+    ...mapGetters({ CartItemLength: "shoppingCart/CartItemLength" })
   },
   methods: {
     logout() {

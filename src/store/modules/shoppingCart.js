@@ -88,6 +88,11 @@ const getters = {
   },
   GetItemSubTotal: () => item => {
     return item.price * item.quantity;
+  },
+  CartItemLength: (state, getters) => {
+    return getters.CartItems.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
   }
 };
 
