@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="inspire">
       <NavBar />
-      <v-footer app absolute dark horizontal class="d-flex justify-center">
+      <v-footer absolute dark horizontal class="d-flex justify-center">
         <span class="my-3">Copyright © GAMLAB</span>
       </v-footer>
     </v-app>
