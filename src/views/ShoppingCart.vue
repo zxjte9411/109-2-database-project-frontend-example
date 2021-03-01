@@ -1,7 +1,19 @@
 <template>
   <v-container fluid fill-height class="d-flex justify-start">
-    <v-row class="mt-10">
-      <v-card v-if="!isLoading" class="mx-auto" outlined>
+    <v-row class="mt-5">
+      <v-col offset="2" class="text-left">
+        <h1>Shopping Cart</h1>
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-5">
+      <v-card v-if="!isLoading" class="mx-auto" outlined max-width="850">
+        <v-list-item v-if="cartItems.length === 0">
+          <v-banner class="my-banner">
+            Your Cart is empty
+          </v-banner>
+        </v-list-item>
+
         <template v-for="(game, index) in cartItems">
           <v-list-item :key="index">
             <v-row class="my-1">
@@ -19,7 +31,7 @@
               <v-col cols="3">
                 <v-img :src="getImagePath(game.imageUrl)"></v-img>
               </v-col>
-              <v-col cols="6" class="text-left">
+              <v-col cols="5" class="text-left">
                 <h4>{{ game.title }}</h4>
                 <span>NT$ {{ game.price }}</span>
                 <div class="input-group d-flex align-start">
@@ -43,9 +55,9 @@
                   </v-btn>
                 </div>
               </v-col>
-              <v-col cols="2">
+              <v-col cols="3">
                 <div class="mt-3 text-right">
-                  <span>{{ GetItemSubTotal(game) }}</span>
+                  <span>NT$ {{ GetItemSubTotal(game) }}</span>
                 </div>
               </v-col>
             </v-row>
@@ -55,6 +67,14 @@
             :key="index + Date.now()"
           ></v-divider>
         </template>
+
+        <v-list-item>
+          <v-row>
+            <v-col class="text-right">
+              <strong>Total：</strong><span>NT$ {{ CartTotalPrice }}</span>
+            </v-col>
+          </v-row>
+        </v-list-item>
       </v-card>
     </v-row>
   </v-container>
@@ -65,10 +85,14 @@ import { imgageHost } from "@/config/config";
 import { mapGetters } from "vuex";
 export default {
   data() {
-    return { isLoading: true };
+    return {
+      currency: "NT$",
+      isLoading: true
+    };
   },
   computed: {
     ...mapGetters({ games: "games/Items" }),
+    ...mapGetters({ CartTotalPrice: "shoppingCart/CartTotalPrice" }),
     ...mapGetters({ GetItemSubTotal: "shoppingCart/GetItemSubTotal" }),
     ...mapGetters({ cartItems: "shoppingCart/CartItems" })
   },
@@ -108,5 +132,9 @@ export default {
   border: 1px solid #e8e9ea !important;
   background-color: white !important;
   border-radius: 0 !important;
+}
+.my-banner {
+  width: 850px;
+  max-width: 850px;
 }
 </style>
