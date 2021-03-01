@@ -17,7 +17,7 @@
                 <h4>{{ game.title }}</h4>
                 <span>NT$ {{ game.price }}</span>
                 <div class="input-group d-flex align-start">
-                  <v-btn class="my-btn" depressed>
+                  <v-btn class="my-btn" depressed @click="decrease(game)">
                     <v-icon>mdi-minus</v-icon>
                   </v-btn>
                   <input
@@ -74,6 +74,9 @@ export default {
       return `${imgageHost}/${filename.replace("./img/", "")}`;
     },
     increment(game) {
+      this.$store.commit("shoppingCart/incrementItemQuantity", game);
+    },
+    decrease(game) {
       this.$store.commit("shoppingCart/incrementItemQuantity", game);
     }
   }
