@@ -68,7 +68,8 @@ const getters = {
   Role: state => state.user.role,
   Email: state => state.user.email,
   Phpssid: state => state.user.cookies,
-  IsLogin: state => state.user.isLogin
+  IsLogin: state => state.user.isLogin,
+  IsSeller: state => state.user.role === "seller"
 };
 
 const handleLoginResponse = async (commit, res) => {
