@@ -1,4 +1,3 @@
-import { host } from "@/config/config";
 import store from "@/store";
 import axios from "axios";
 
@@ -9,9 +8,7 @@ export const GetwalletOrProfit = async () => {
   const formData = new FormData();
   formData.append("request", request);
   try {
-    const response = await axios.post(`${host}/php/login.php`, formData, {
-      headers: { "Content-Type": "multipart/form-data" }
-    });
+    const response = await axios.post("/php/login.php", formData);
     let result = null;
     if (userRole === "seller") result = `Profit：${response.data.profit}`;
     else result = `Blance：${response.data.wallet}`;
@@ -25,8 +22,6 @@ export const Deposit = async amount => {
   const formData = new FormData();
   formData.append("request", "deposit");
   formData.append("value", amount);
-  const res = await axios.post(`${host}/php/login.php`, formData, {
-    headers: { "Content-Type": "multipart/form-data" }
-  });
+  const res = await axios.post("/php/login.php", formData);
   return res;
 };
