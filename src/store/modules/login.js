@@ -1,9 +1,10 @@
-import { Login } from "@/api/login.js";
+import { Login, GetUserId } from "@/api/login.js";
 const getDefaultState = () => {
   return localStorage.getItem("user")
     ? { user: JSON.parse(localStorage.getItem("user")) }
     : {
         user: {
+          id: "",
           role: "",
           email: "",
           cookies: "",
@@ -31,6 +32,7 @@ const actions = {
       if (result) {
         commit("setEmail", email);
         commit("setIsLogin", true);
+
         localStorage.setItem("user", JSON.stringify(state.user));
         resolve();
       } else {
@@ -48,6 +50,9 @@ const actions = {
   }
 };
 const mutations = {
+  SetId(state, id) {
+    state.user.id = id;
+  },
   setRole(state, role) {
     state.user.role = role;
   },
@@ -73,11 +78,12 @@ const getters = {
 };
 
 const handleLoginResponse = async (commit, res) => {
-  res = await res;
+  const userId = (await GetUserId()).data.userno;
   let allCookies = document.cookie;
-  const data = res.data;
+  const data = (await res).data;
   if (data.msg !== "success") return false;
   commit("setRole", data.userrole);
+  commit("SetId", userId);
   commit("setCookies", allCookies);
   return true;
 };
