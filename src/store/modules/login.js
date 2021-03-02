@@ -13,9 +13,6 @@ const getDefaultState = () => {
 };
 const state = getDefaultState();
 const actions = {
-  resetCartState({ commit }) {
-    commit("resetCartState");
-  },
   setRole({ commit }, role) {
     commit("setRole", role);
   },
@@ -42,15 +39,15 @@ const actions = {
       }
     });
   },
-  logout({ commit }) {
+  logout({ commit /*, dispatch*/ }) {
     localStorage.removeItem("user");
-    commit("resetCartState");
+    localStorage.removeItem("cart");
+    // unmark to clean shooping cart
+    // dispatch("shoppingCart/resetCartState", null, { root: true });
+    commit("reSetLoginState");
   }
 };
 const mutations = {
-  resetCartState(state) {
-    Object.assign(state, getDefaultState());
-  },
   setRole(state, role) {
     state.user.role = role;
   },
@@ -62,6 +59,9 @@ const mutations = {
   },
   setIsLogin(state, isLogin) {
     state.user.isLogin = isLogin;
+  },
+  reSetLoginState(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 const getters = {
