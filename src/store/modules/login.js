@@ -36,15 +36,15 @@ const actions = {
         localStorage.setItem("user", JSON.stringify(state.user));
         resolve();
       } else {
-        commit("resetCartState");
+        // commit("resetCartState");
         reject("email or password error");
       }
     });
   },
   logout({ commit /*, dispatch*/ }) {
     localStorage.removeItem("user");
-    localStorage.removeItem("cart");
     // unmark to clean shooping cart
+    // localStorage.removeItem("cart");
     // dispatch("shoppingCart/resetCartState", null, { root: true });
     commit("reSetLoginState");
   }
