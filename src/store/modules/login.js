@@ -70,6 +70,7 @@ const mutations = {
   }
 };
 const getters = {
+  Id: state => state.user.id,
   Role: state => state.user.role,
   Email: state => state.user.email,
   Phpssid: state => state.user.cookies,
