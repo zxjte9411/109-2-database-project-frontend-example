@@ -31,7 +31,7 @@
           <v-btn
             class="login-btn"
             type="submit"
-            :disabled="isRoading"
+            :disabled="isLoading"
             color="success"
             >Submit</v-btn
           >
@@ -50,7 +50,7 @@ export default {
         password: ""
       },
       valid: true,
-      isRoading: false,
+      isLoading: false,
       passwordRules: [
         v => !!v || "Password is required",
         v => (v && v.length >= 5) || "password must be more than 5 characters"
@@ -64,7 +64,7 @@ export default {
   methods: {
     async handleLogin() {
       if (this.$refs.form && this.$refs.form.validate()) {
-        this.isRoading = true;
+        this.isLoading = true;
         await this.$store
           .dispatch("login/login", [this.user.email, this.user.password])
           .then(() => {
@@ -72,7 +72,7 @@ export default {
           })
           .catch(err => {
             console.log(err);
-            this.isRoading = false;
+            this.isLoading = false;
             this.valid = false;
           });
       }
