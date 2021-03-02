@@ -14,7 +14,6 @@ export const GetwalletOrProfit = function() {
     })
     .then(response => {
       let result = null;
-      console.log(response);
       if (userRole === "seller") result = `Profit：${response.data.profit}`;
       else result = `Blance：${response.data.wallet}`;
       return result;
