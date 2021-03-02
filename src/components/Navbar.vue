@@ -2,10 +2,15 @@
   <v-main class="mb-10">
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
-      <a v-if="isLogin" class="text-h6 moneyInfo">【{{ moneyInfo }}】</a>
+      <router-link v-if="isLogin" to="/deposit" class="my-router-link pa-1">
+        <v-btn :disabled="isLogin && IsSeller">
+          <v-icon>mdi-cash-plus</v-icon>
+          <a v-if="isLogin" class="text-h6 moneyInfo">【{{ moneyInfo }}】</a>
+        </v-btn>
+      </router-link>
       <router-link
-        v-if="isLogin"
-        class="my-router-link mr-3"
+        v-if="isLogin && !IsSeller"
+        class="my-router-link pa-1"
         to="/shoppingcart"
       >
         <v-badge
@@ -20,7 +25,7 @@
           </v-btn>
         </v-badge>
       </router-link>
-      <div class="pa-2 d-flex flex-row">
+      <div class="pa-1 d-flex flex-row">
         <router-link v-if="!isLogin" class="my-router-link" to="/login">
           <v-btn block>
             login
@@ -73,20 +78,19 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { GetwalletOrProfit } from "@/api/walletOrProfit";
 
 export default {
   data() {
-    return {
-      moneyInfo: ""
-    };
+    return {};
   },
   computed: {
     ...mapGetters({ isLogin: "login/IsLogin" }),
-    ...mapGetters({ CartItemLength: "shoppingCart/CartItemLength" })
+    ...mapGetters({ CartItemLength: "shoppingCart/CartItemLength" }),
+    ...mapGetters({ IsSeller: "login/IsSeller" }),
+    ...mapGetters({ moneyInfo: "wallet/GetWallet" })
   },
   async created() {
-    this.moneyInfo = await GetwalletOrProfit();
+    await this.$store.dispatch("wallet/init");
   },
   methods: {
     logout() {
