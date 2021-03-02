@@ -6,5 +6,10 @@ export const GetCoupon = async () => {
   const formData = new FormData();
   formData.append("request", "getcoupon");
   formData.append("userno", userId);
-  return axios.post("/php/shoppingCart.php", formData);
+  try {
+    const response = await axios.post("/php/shoppingCart.php", formData);
+    return response;
+  } catch (err) {
+    return console.log(err);
+  }
 };
