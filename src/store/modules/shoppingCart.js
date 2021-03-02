@@ -1,10 +1,13 @@
+import { GetCoupon } from "@/api/shoopingCart";
+
 const getDefaultState = () => {
-  const items = localStorage.getItem("cart")
+  const cart = localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
-    : [];
+    : { items: [], coupons: [] };
   return {
     // item: [{ id, quantity }]
-    items,
+    items: cart.items,
+    coupons: cart.coupons,
     checkoutStatus: null
   };
 };
@@ -31,6 +34,10 @@ const actions = {
       //   { root: true }
       // );
     }
+  },
+  async GetCoupon({ commit }) {
+    const coupones = (await GetCoupon()).data.data;
+    commit("SetCoupons", coupones);
   }
 };
 
@@ -46,22 +53,26 @@ const mutations = {
       id,
       quantity: 1
     });
-    localStorage.setItem("cart", JSON.stringify(state.items));
+    localStorage.setItem("cart", JSON.stringify(state));
   },
   incrementItemQuantity(state, { id }) {
     const cartItem = state.items.find(item => item.id === id);
     cartItem.quantity++;
-    localStorage.setItem("cart", JSON.stringify(state.items));
+    localStorage.setItem("cart", JSON.stringify(state));
   },
   decrementItemQuantity(state, { id }) {
     const cartItem = state.items.find(item => item.id === id);
     cartItem.quantity--;
-    localStorage.setItem("cart", JSON.stringify(state.items));
+    localStorage.setItem("cart", JSON.stringify(state));
   },
   remoItemFromShoopingCart(state, { id }) {
     const cartItem = state.items.find(item => item.id === id);
     state.items.splice(state.items.indexOf(cartItem), 1);
-    localStorage.setItem("cart", JSON.stringify(state.items));
+    localStorage.setItem("cart", JSON.stringify(state));
+  },
+  SetCoupons(state, coupons) {
+    state.coupons = coupons;
+    localStorage.setItem("cart", JSON.stringify(state));
   }
 };
 
@@ -93,7 +104,8 @@ const getters = {
     return state.items.reduce((total, item) => {
       return total + item.quantity;
     }, 0);
-  }
+  },
+  Coupons: state => state.coupons
 };
 
 export default { namespaced: true, state, actions, mutations, getters };
