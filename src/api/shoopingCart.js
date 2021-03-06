@@ -13,3 +13,21 @@ export const GetCoupon = async () => {
     return console.log(err);
   }
 };
+
+export const Checkout = async gameids => {
+  const userId = store.getters["login/Id"];
+  const totalPrice = store.getters["shoppingCart/CartTotalPrice"];
+  const coupon = store.getters["shoppingCart/SelectedCoupon"];
+  const formData = new FormData();
+  formData.append("request", "purchaseshoppingcart");
+  formData.append("userno", userId);
+  formData.append("total", totalPrice);
+  formData.append("couponid", coupon ? coupon.Coupon_No : "");
+  formData.append("gameIds", JSON.stringify(gameids));
+  try {
+    const response = await axios.post("/php/shoppingCart.php", formData);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
