@@ -10,8 +10,9 @@ export const GetwalletOrProfit = async () => {
   try {
     const response = await axios.post("/php/login.php", formData);
     let result = null;
-    if (userRole === "seller") result = `Profit：${response.data.profit}`;
-    else result = `Blance：${response.data.wallet}`;
+    if (userRole === "seller")
+      result = { name: "Profit：", value: Number(response.data.profit) };
+    else result = { name: "Blance：", value: Number(response.data.wallet) };
     return result;
   } catch (err) {
     console.log(err);
