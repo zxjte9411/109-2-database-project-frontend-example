@@ -1,7 +1,7 @@
 import { GetwalletOrProfit, Deposit } from "@/api/walletOrProfit";
 
 const state = {
-  wallet: "",
+  wallet: {},
   isUpdateSuccess: false
 };
 const actions = {
