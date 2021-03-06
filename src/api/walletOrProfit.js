@@ -26,3 +26,11 @@ export const Deposit = async amount => {
   const res = await axios.post("/php/login.php", formData);
   return res;
 };
+
+export const UpdateWallet = async value => {
+  const formData = new FormData();
+  formData.append("request", "updatewallet");
+  formData.append("wallet", value);
+  const res = await axios.post("/php/login.php", formData);
+  return res;
+};
