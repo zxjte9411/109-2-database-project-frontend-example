@@ -10,7 +10,8 @@ const getDefaultState = () => {
     items: cart.items,
     coupons: cart.coupons,
     selectedCoupon: null,
-    checkoutStatus: null
+    checkoutStatus: null,
+    errorMessage: ""
   };
 };
 
@@ -134,8 +135,10 @@ const getters = {
     return getters.CartTotalPrice - (coupon ? coupon.Amount : 0) >= 0;
   },
   IsCanCheckout: (state, getters, rootState, rootGetters) => {
+    state.errorMessage = "Insufficient balance";
     return rootGetters["wallet/GetWallet"].value - getters.CartTotalPrice >= 0;
-  }
+  },
+  ErrorMessage: state => state.errorMessage
 };
 
 export default { namespaced: true, state, actions, mutations, getters };

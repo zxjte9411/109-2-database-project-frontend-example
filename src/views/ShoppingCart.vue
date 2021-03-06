@@ -33,6 +33,15 @@
     >
       <strong>Total price cannot less than 0!</strong>
     </v-snackbar>
+    <v-snackbar
+      v-model="errorMessageSnackbar"
+      :timeout="2000"
+      color="red"
+      centered
+      class="text-center"
+    >
+      <strong>{{ ErrorMessage }}</strong>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -44,11 +53,12 @@ import { mapGetters } from "vuex";
 export default {
   components: { CartItems, Coupon },
   data() {
-    return { isLoading: true, snackbar: false };
+    return { isLoading: true, snackbar: false, errorMessageSnackbar: false };
   },
   computed: {
     ...mapGetters({ CartItemLength: "shoppingCart/CartItemLength" }),
-    ...mapGetters({ IsCanCheckout: "shoppingCart/IsCanCheckout" })
+    ...mapGetters({ IsCanCheckout: "shoppingCart/IsCanCheckout" }),
+    ...mapGetters({ ErrorMessage: "shoppingCart/ErrorMessage" })
   },
   async created() {
     await this.$store.dispatch("games/getAllGames");
@@ -59,6 +69,7 @@ export default {
     async checkout() {
       if (this.IsCanCheckout)
         await this.$store.dispatch("shoppingCart/Checkout");
+      else this.errorMessageSnackbar = true;
     }
   }
 };
