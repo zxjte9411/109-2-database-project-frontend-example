@@ -1,40 +1,66 @@
 <template>
-  <v-container fluid fill-height class="d-flex align-start">
-    <v-row v-if="!isLoading" class="mt-5">
-      <v-col class="text-left">
-        <v-row>
-          <v-col offset="2">
-            <h1>Shopping Cart</h1>
-          </v-col>
-        </v-row>
-        <CartItems />
-        <v-row>
-          <v-col offset="2">
-            <h1>Coupons</h1>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+  <v-container fluid fill-height class="mt-5 d-flex align-start">
+    <v-col v-if="!isLoading" class="text-left">
+      <v-row>
+        <v-col offset="2">
+          <CartItems />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col offset="2">
+          <Coupon />
+          <v-row style="max-width:850px" class="my-2 d-flex justify-end">
+            <v-btn
+              :disabled="!CartItemLength"
+              color="warning"
+              depressed
+              large
+              rounded
+              @click="checkout()"
+              >Checkout
+            </v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-col>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      color="red"
+      absolute
+      centered
+      class="text-center"
+    >
+      <strong>Total price cannot less than 0!</strong>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
 import CartItems from "@/components/CartItems";
+import Coupon from "@/components/Coupon";
+import { mapGetters } from "vuex";
+
 export default {
-  components: { CartItems },
+  components: { CartItems, Coupon },
   data() {
-    return {
-      currency: "NT$",
-      isLoading: true
-    };
+    return { isLoading: true, snackbar: false };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({ CartItemLength: "shoppingCart/CartItemLength" }),
+    ...mapGetters({ IsCanCheckout: "shoppingCart/IsCanCheckout" })
+  },
   async created() {
     await this.$store.dispatch("games/getAllGames");
     await this.$store.dispatch("shoppingCart/GetCoupon");
     this.isLoading = false;
   },
-  methods: {}
+  methods: {
+    async checkout() {
+      if (this.IsCanCheckout)
+        await this.$store.dispatch("shoppingCart/Checkout");
+    }
+  }
 };
 </script>
 
