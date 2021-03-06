@@ -5,7 +5,9 @@
       <router-link v-if="isLogin" to="/deposit" class="my-router-link pa-1">
         <v-btn :disabled="isLogin && IsSeller">
           <v-icon>mdi-cash-plus</v-icon>
-          <a v-if="isLogin" class="text-h6 moneyInfo">【{{ moneyInfo }}】</a>
+          <a v-if="isLogin" class="text-h6 moneyInfo"
+            >【{{ moneyInfo.name }} {{ moneyInfo.value }}】</a
+          >
         </v-btn>
       </router-link>
       <router-link
