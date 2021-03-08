@@ -34,3 +34,13 @@ export const UpdateWallet = async value => {
   const res = await axios.post("/php/login.php", formData);
   return res;
 };
+
+export const UpdateProfit = async value => {
+  const userId = store.state.login.user.id;
+  const formData = new FormData();
+  formData.append("request", "updateprofit");
+  formData.append("profit", value);
+  formData.append("userno", userId);
+  const res = await axios.post("/php/processorder.php", formData);
+  return res;
+};
