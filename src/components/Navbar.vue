@@ -12,6 +12,24 @@
       </router-link>
       <router-link
         v-if="isLogin && !IsSeller"
+        class="my-router-link"
+        to="/orderrecord"
+      >
+        <v-btn block>
+          My Order
+        </v-btn>
+      </router-link>
+      <router-link
+        v-if="isLogin && IsSeller"
+        class="my-router-link"
+        to="/orderrecord"
+      >
+        <v-btn block>
+          Order
+        </v-btn>
+      </router-link>
+      <router-link
+        v-if="isLogin && !IsSeller"
         class="my-router-link pa-1"
         to="/shoppingcart"
       >

@@ -4,6 +4,8 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import ShoppingCart from "@/views/ShoppingCart.vue";
 import Deposit from "@/views/Deposit.vue";
+import OrderRecord from "@/views/OrderRecord.vue";
+import ProcessOrder from "@/views/OrderRecord.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +29,21 @@ const routes = [
     path: "/deposit",
     name: "Deposit",
     component: Deposit
+  },
+  {
+    path: "/orderrecord",
+    name: "Order",
+    component: OrderRecord
+  },
+  {
+    path: "/processorder",
+    name: "ProcessOrder",
+    component: ProcessOrder
+  },
+  {
+    path: "*",
+    name: "NotFound",
+    redirect: { name: "Home" }
   },
   {
     path: "/",
