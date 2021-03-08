@@ -2,7 +2,12 @@
   <v-main class="mb-10">
     <v-app-bar app flat dark>
       <v-spacer></v-spacer>
-      <router-link v-if="isLogin" to="/deposit" class="my-router-link pa-1">
+      <router-link
+        v-if="isLogin"
+        :event="!IsSeller ? 'click' : ''"
+        to="/deposit"
+        class="my-router-link pa-1"
+      >
         <v-btn :disabled="isLogin && IsSeller">
           <v-icon>mdi-cash-plus</v-icon>
           <a v-if="isLogin" class="text-h6 moneyInfo"
