@@ -97,7 +97,6 @@ export default {
       return !(finished === "1");
     },
     getImagePath(game) {
-      console.log(game);
       if (!game) return "https://www.pixiv.net/artworks/86483702";
       return `${imgageHost}/${game.ImageURL.replace("./img/", "")}`;
     }
