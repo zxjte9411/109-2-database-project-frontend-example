@@ -6,6 +6,9 @@ import ShoppingCart from "@/views/ShoppingCart.vue";
 import Deposit from "@/views/Deposit.vue";
 import OrderRecord from "@/views/OrderRecord.vue";
 import ProcessOrder from "@/views/OrderRecord.vue";
+import MyProduct from "@/views/MyProduct.vue";
+
+import store from "@/store";
 
 Vue.use(VueRouter);
 
@@ -39,6 +42,15 @@ const routes = [
     path: "/processorder",
     name: "ProcessOrder",
     component: ProcessOrder
+  },
+  {
+    path: "/myproduct",
+    name: "MyProduct",
+    component: MyProduct,
+    beforeEnter: (to, from, next) => {
+      if (store.getters["login/Role"] === "seller") next();
+      else next({ name: "Home" });
+    }
   },
   {
     path: "*",
