@@ -5,7 +5,7 @@ import Login from "@/views/Login.vue";
 import ShoppingCart from "@/views/ShoppingCart.vue";
 import Deposit from "@/views/Deposit.vue";
 import OrderRecord from "@/views/OrderRecord.vue";
-import ProcessOrder from "@/views/OrderRecord.vue";
+import ProcessOrder from "@/views/ProcessOrder.vue";
 import MyProduct from "@/views/MyProduct.vue";
 
 import store from "@/store";
