@@ -4,11 +4,8 @@
       <v-col cols="8">
         <h1 class="text-left my-5">Order List</h1>
         <v-expansion-panels v-model="clickedItem" accordion>
-          <v-expansion-panel
-            v-for="(item, i) in orders"
-            :key="i"
-            :readonly="IsReadonly(item.Finished)"
-          >
+          <v-expansion-panel v-for="(item, i) in orders" :key="i">
+            <!-- :readonly="IsReadonly(item.Finished)"-->
             <v-expansion-panel-header disable-icon-rotate>
               <template v-slot:actions>
                 <v-icon v-if="Number(item.Finished)" color="teal">
