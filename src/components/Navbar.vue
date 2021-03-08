@@ -10,13 +10,6 @@
         <v-btn>myproduct</v-btn>
       </router-link>
       <router-link
-        v-if="isLogin && IsSeller"
-        to="/processorder"
-        class="my-router-link pa-1"
-      >
-        <v-btn>processorder</v-btn>
-      </router-link>
-      <router-link
         v-if="isLogin"
         :event="!IsSeller ? 'click' : ''"
         to="/deposit"
@@ -41,10 +34,10 @@
       <router-link
         v-if="isLogin && IsSeller"
         class="my-router-link"
-        to="/orderrecord"
+        to="/processorder"
       >
         <v-btn block>
-          Order
+          processorder
         </v-btn>
       </router-link>
       <router-link

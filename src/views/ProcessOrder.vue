@@ -7,7 +7,7 @@
           <v-expansion-panel
             v-for="(item, i) in orders"
             :key="i"
-            :readonly="!IsReadonly(item.Finished)"
+            :readonly="IsReadonly(item.Finished)"
           >
             <v-expansion-panel-header disable-icon-rotate>
               <template v-slot:actions>
@@ -49,7 +49,11 @@
                     <span>{{ orderItem.Amount }}</span>
                   </v-col>
                 </v-row>
-                <v-btn color="amber" class="mt-3" @click="handleConfirm(item)"
+                <v-btn
+                  v-if="IsReadonly(item.Finished)"
+                  color="amber"
+                  class="mt-3"
+                  @click="handleConfirm(item)"
                   >Confirm
                 </v-btn>
               </v-col>
@@ -117,12 +121,9 @@ export default {
       this.orders.length = 0;
       this.orders = (await GetOrders(this.UserId)).data;
       for (const i in this.orders) {
-        if (this.orders[i].Finished === "0") {
-          const data = (await GetOrderInformation(this.orders[i].Order_No))
-            .data;
-          this.orders[i].Date = data[0].Date;
-          this.orders[i].Price = data[0].Order_Price;
-        }
+        const data = (await GetOrderInformation(this.orders[i].Order_No)).data;
+        this.orders[i].Date = data[0].Date;
+        this.orders[i].Price = data[0].Order_Price;
       }
       this.orders.reverse();
     },
