@@ -11,6 +11,7 @@
           <v-card class="mx-auto my-12" max-width="380" max-height="500">
             <a
               ><v-img
+                contain
                 height="250"
                 :src="getImagePath(games[(i - 1) * 3 + n - 1])"
             /></a>
@@ -29,7 +30,7 @@
               <v-btn
                 color="deep-purple lighten-2"
                 text
-                @click="test(games[(i - 1) * 3 + n - 1])"
+                @click="addToCart(games[(i - 1) * 3 + n - 1])"
               >
                 Add to Cart
               </v-btn>
@@ -89,7 +90,7 @@ export default {
       else if (length - index * 3 < 0) return length - index * 3 + 3;
       else return length - index * 3;
     },
-    test(game) {
+    addToCart(game) {
       // console.log(game);
       this.$store.dispatch("shoppingCart/addProductToCart", game);
     }
