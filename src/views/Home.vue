@@ -75,7 +75,9 @@ export default {
   methods: {
     async loadData() {
       await this.$store.dispatch("games/getAllGames", this.category);
-      this.rowSize = this.games.length < 3 ? 1 : this.games.length / 3;
+      this.rowSize = Math.ceil(
+        this.games.length < 3 ? 1 : this.games.length / 3
+      );
     },
     getImagePath(game) {
       if (!game) return "https://www.pixiv.net/artworks/86483702";
@@ -83,8 +85,8 @@ export default {
     },
     getColoumNumber(index) {
       const length = this.games.length;
-      if ((length - index * 3) % 3 == 0) return 3;
-      else if (length - index * 3 < 0) return length;
+      if ((length - index * 3) % 3 >= 0) return 3;
+      else if (length - index * 3 < 0) return length - index * 3 + 3;
       else return length - index * 3;
     },
     test(game) {
