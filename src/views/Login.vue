@@ -68,7 +68,9 @@ export default {
         await this.$store
           .dispatch("login/login", [this.user.email, this.user.password])
           .then(() => {
-            this.$router.push("/home");
+            if (this.$store.getters["login/Role"] === "seller")
+              this.$router.push("/myproduct");
+            else this.$router.push("/home");
           })
           .catch(err => {
             console.log(err);
