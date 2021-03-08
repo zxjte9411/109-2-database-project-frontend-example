@@ -67,7 +67,6 @@ export default {
   },
   async created() {
     this.products = (await Getmyproduct()).data;
-    console.log(this.products);
   },
   methods: {
     getImagePath(product) {

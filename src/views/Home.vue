@@ -91,7 +91,6 @@ export default {
       else return length - index * 3;
     },
     addToCart(game) {
-      // console.log(game);
       this.$store.dispatch("shoppingCart/addProductToCart", game);
     }
   }
