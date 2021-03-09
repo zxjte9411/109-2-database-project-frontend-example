@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import { UploadFile } from "@/api/myproduct";
+
 export default {
   data: () => ({
     fileObject: null,
@@ -88,6 +90,7 @@ export default {
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     description: "",
     fileInputRules: [
+      v => !!v || "image is required",
       value =>
         !value ||
         value.size < 2000000 ||
@@ -100,8 +103,11 @@ export default {
     }
   },
   methods: {
-    validate() {
+    async validate() {
       this.$refs.form.validate();
+      if (this.valid) {
+        await UploadFile(this.fileObject);
+      }
     },
     reset() {
       this.$refs.form.reset();

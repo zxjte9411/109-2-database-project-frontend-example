@@ -34,3 +34,19 @@ export const LaunchGame = async gameId => {
     console.log(err);
   }
 };
+
+export const UploadFile = async fileObj => {
+  const formData = new FormData();
+  formData.append("image", fileObj);
+  axios
+    .post("/php/uploadFile.php", formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    })
+    .then(response => {
+      console.log(response);
+      return response.data;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
