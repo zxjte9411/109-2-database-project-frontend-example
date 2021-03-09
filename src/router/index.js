@@ -7,6 +7,7 @@ import Deposit from "@/views/Deposit.vue";
 import OrderRecord from "@/views/OrderRecord.vue";
 import ProcessOrder from "@/views/ProcessOrder.vue";
 import MyProduct from "@/views/MyProduct.vue";
+import NewProduct from "@/views/NewProduct.vue";
 
 import store from "@/store";
 
@@ -51,6 +52,11 @@ const routes = [
       if (store.getters["login/Role"] === "seller") next();
       else next({ name: "Home" });
     }
+  },
+  {
+    path: "/newproduct",
+    name: "NewProduct",
+    component: NewProduct
   },
   {
     path: "*",
