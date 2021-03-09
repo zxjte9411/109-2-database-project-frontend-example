@@ -27,11 +27,11 @@
               </v-col>
               <v-col cols="3">
                 <v-img
-                  max-width="200px"
+                  max-width="460px"
                   :src="getImagePath(game.imageUrl)"
                 ></v-img>
               </v-col>
-              <v-col cols="5" class="text-left">
+              <v-col cols="5" class="text-left" align-self="center">
                 <h4>{{ game.title }}</h4>
                 <span>{{ currency }} {{ game.price }}</span>
                 <div class="input-group d-flex align-start">
@@ -55,7 +55,7 @@
                   </v-btn>
                 </div>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="3" align-self="center">
                 <div class="mt-3 text-right">
                   <span>{{ currency }} {{ GetItemSubTotal(game) }}</span>
                 </div>
