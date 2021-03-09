@@ -38,15 +38,26 @@ export const LaunchGame = async gameId => {
 export const UploadFile = async fileObj => {
   const formData = new FormData();
   formData.append("image", fileObj);
-  axios
-    .post("/php/uploadFile.php", formData, {
-      headers: { "Content-Type": "multipart/form-data" }
-    })
-    .then(response => {
-      console.log(response);
-      return response.data;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  try {
+    const response = await axios.post("/php/uploadFile.php", formData);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const PublishProduct = async product => {
+  const formData = new FormData();
+  formData.append("request", "publish");
+  formData.append("name", product.name);
+  formData.append("price", product.price);
+  formData.append("category", product.category);
+  formData.append("description", product.description);
+  formData.append("link", product.imageLink);
+  try {
+    const response = await axios.post("/php/publish.php", formData);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
 };

@@ -7,7 +7,12 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-card outlined class="pa-10">
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+              @submit.prevent="handleSubmit"
+            >
               <v-text-field
                 v-model="productName"
                 :rules="productNameRules"
@@ -25,8 +30,8 @@
               ></v-text-field>
 
               <v-select
-                v-model="select"
-                :items="items"
+                v-model="selectedCategory"
+                :items="category"
                 :rules="[v => !!v || 'Category is required']"
                 label="Category"
                 required
@@ -40,7 +45,13 @@
                 required
                 prepend-inner-icon="mdi-information-variant "
               ></v-text-field>
-
+              <v-text-field
+                v-model="inventory"
+                label="Inventory"
+                :rules="inventoryRules"
+                required
+                prepend-inner-icon="mdi-information-variant"
+              ></v-text-field>
               <v-file-input
                 v-model="fileObject"
                 :rules="fileInputRules"
@@ -53,12 +64,12 @@
                   :disabled="!valid"
                   color="success"
                   class="mr-4"
-                  @click="validate"
+                  type="submit"
                 >
-                  Validate
+                  Submit
                 </v-btn>
-                <v-btn color="pink" class="mr-4" @click="reset">
-                  Reset Form
+                <v-btn color="pink" class="mr-4 white--text" @click="reset">
+                  Clear
                 </v-btn>
               </v-row>
             </v-form>
@@ -70,11 +81,10 @@
 </template>
 
 <script>
-import { UploadFile } from "@/api/myproduct";
+import { UploadFile, PublishProduct } from "@/api/myproduct";
 
 export default {
   data: () => ({
-    fileObject: null,
     valid: true,
     productName: "",
     productNameRules: [
@@ -86,34 +96,56 @@ export default {
       v => !!v || "Price is required",
       v => /^[1-9]+[0-9]*$/.test(v) || "Price must be valid"
     ],
-    select: null,
-    items: ["Item 1", "Item 2", "Item 3", "Item 4"],
+    selectedCategory: null,
+    category: ["single", "battle", "multi"],
     description: "",
+    inventory: "",
+    inventoryRules: [
+      v => !!v || "Inventory is required",
+      v => /^[1-9]+[0-9]*$/.test(v) || "Inventory must be valid"
+    ],
+    fileObject: null,
     fileInputRules: [
       v => !!v || "image is required",
       value =>
         !value ||
-        value.size < 2000000 ||
+        value.size < 5000000 ||
         "Avatar size should be less than 2 MB!"
     ]
   }),
-  watch: {
-    fileObject: function() {
-      console.log(this.fileObject);
-    }
-  },
+  // watch: {
+  //   fileObject: function() {
+  //     console.log(this.fileObject);
+  //   }
+  // },
   methods: {
     async validate() {
       this.$refs.form.validate();
-      if (this.valid) {
-        await UploadFile(this.fileObject);
-      }
     },
     reset() {
       this.$refs.form.reset();
     },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+    // resetValidation() {
+    //   this.$refs.form.resetValidation();
+    // },
+    async handleSubmit() {
+      if (this.$refs.form && this.$refs.form.validate()) {
+        const imageRes = await UploadFile(this.fileObject);
+        if (imageRes.success) {
+          const res = await PublishProduct({
+            name: this.productName,
+            description: this.description,
+            category: this.selectedCategory,
+            price: this.price,
+            imageLink: imageRes.imageLink
+          });
+          if (res.msg === "success") {
+            this.$router.push({ name: "MyProduct" });
+          }
+        }
+        // this.$refs.form.resetValidation();
+        // this.$refs.form.reset();
+      }
     }
   }
 };
