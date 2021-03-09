@@ -13,6 +13,11 @@ import store from "@/store";
 
 Vue.use(VueRouter);
 
+const CheckIsSeller = next => {
+  if (store.getters["login/Role"] === "seller") next();
+  else next({ name: "Home" });
+};
+
 const routes = [
   {
     path: "/home",
@@ -42,21 +47,26 @@ const routes = [
   {
     path: "/processorder",
     name: "ProcessOrder",
-    component: ProcessOrder
+    component: ProcessOrder,
+    beforeEnter: (to, from, next) => {
+      CheckIsSeller(next);
+    }
   },
   {
     path: "/myproduct",
     name: "MyProduct",
     component: MyProduct,
     beforeEnter: (to, from, next) => {
-      if (store.getters["login/Role"] === "seller") next();
-      else next({ name: "Home" });
+      CheckIsSeller(next);
     }
   },
   {
     path: "/newproduct",
     name: "NewProduct",
-    component: NewProduct
+    component: NewProduct,
+    beforeEnter: (to, from, next) => {
+      CheckIsSeller(next);
+    }
   },
   {
     path: "*",
