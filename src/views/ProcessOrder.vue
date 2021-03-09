@@ -117,11 +117,21 @@ export default {
       this.orders = [];
       this.orders.length = 0;
       this.orders = (await GetOrders(this.UserId)).data;
+      let data = [];
       for (const i in this.orders) {
-        const data = (await GetOrderInformation(this.orders[i].Order_No)).data;
-        this.orders[i].Date = data[0].Date;
-        this.orders[i].Price = data[0].Order_Price;
+        data.push(
+          GetOrderInformation(this.orders[i].Order_No)
+            .then(response => response.data)
+            .catch(err => err)
+        );
       }
+      const vm = this;
+      await Promise.all(data).then(res => {
+        for (const i in vm.orders) {
+          vm.orders[i].Date = res[i][0].Date;
+          vm.orders[i].Price = res[i][0].Order_Price;
+        }
+      });
       this.orders.reverse();
     },
     async handleConfirm(item) {
