@@ -8,10 +8,10 @@
             <!-- :readonly="IsReadonly(item.Finished)"-->
             <v-expansion-panel-header disable-icon-rotate>
               <template v-slot:actions>
-                <v-icon v-if="Number(item.Finished)" color="teal">
+                <v-icon v-if="parseInt(item.Finished)" color="teal">
                   mdi-check
                 </v-icon>
-                <v-icon v-if="!Number(item.Finished)" color="error">
+                <v-icon v-if="!parseInt(item.Finished)" color="error">
                   mdi-timer-sand
                 </v-icon>
               </template>
