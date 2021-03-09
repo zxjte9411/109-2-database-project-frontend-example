@@ -23,7 +23,7 @@ const actions = {
   },
   addProductToCart({ state, commit }, game) {
     commit("setCheckoutStatus", null);
-    if (game.inventory > 0) {
+    if (game.Inventory > 0) {
       const cartItem = state.items.find(item => item.id === game.Game_No);
       if (!cartItem) {
         commit("pushProductToCart", { id: game.Game_No });
@@ -41,7 +41,7 @@ const actions = {
   async GetCoupon({ commit }) {
     const coupones = (await GetCoupon()).data.data;
     coupones.forEach(coupon => {
-      coupon.Amount = Number(coupon.Amount);
+      coupon.Amount = parseInt(coupon.Amount);
     });
     commit("SetCoupons", coupones);
   },

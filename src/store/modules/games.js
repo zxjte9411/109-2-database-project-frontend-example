@@ -8,7 +8,7 @@ const actions = {
   async getAllGames({ commit }, category) {
     const items = (await GetGamesByCategory(category)).data.data;
     items.forEach(element => {
-      element.inventory = 20;
+      element.Inventory = parseInt(element.Inventory);
     });
     commit("setGames", items);
   }
@@ -20,7 +20,7 @@ const mutations = {
   },
   decrementProductInventory(state, { Game_No }) {
     const item = state.items.find(item => item.id === Game_No);
-    item.inventory--;
+    item.Inventory--;
   }
 };
 

@@ -137,6 +137,7 @@ export default {
             description: this.description,
             category: this.selectedCategory,
             price: this.price,
+            inventory: this.inventory,
             imageLink: imageRes.imageLink
           });
           if (res.msg === "success") {
