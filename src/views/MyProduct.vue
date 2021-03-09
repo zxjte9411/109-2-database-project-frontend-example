@@ -10,7 +10,7 @@
             <v-list-item :key="index">
               <v-row class="my-1">
                 <v-col cols="3" align-self="center">
-                  <v-img :src="getImagePath(product)"></v-img>
+                  <v-img max-width="200px" :src="getImagePath(product)"></v-img>
                 </v-col>
                 <v-col cols="3" class="text-left">
                   <h4>{{ product.Name }}</h4>

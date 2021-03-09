@@ -42,7 +42,10 @@
                   :key="j + item.Order_No"
                 >
                   <v-col cols="3" class="mr-2 d-flex align-center">
-                    <v-img :src="getImagePath(orderItem)"></v-img>
+                    <v-img
+                      max-width="200px"
+                      :src="getImagePath(orderItem)"
+                    ></v-img>
                   </v-col>
                   <v-col class="text-left">
                     <h4>{{ orderItem.Name }}</h4>

@@ -12,7 +12,7 @@
             <a
               ><v-img
                 contain
-                height="250"
+                max-height="250"
                 :src="getImagePath(games[(i - 1) * 3 + n - 1])"
             /></a>
             <v-card-title>{{ games[(i - 1) * 3 + n - 1].Name }}</v-card-title>

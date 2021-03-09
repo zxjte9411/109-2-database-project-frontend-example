@@ -26,7 +26,10 @@
                 </v-btn>
               </v-col>
               <v-col cols="3">
-                <v-img :src="getImagePath(game.imageUrl)"></v-img>
+                <v-img
+                  max-width="200px"
+                  :src="getImagePath(game.imageUrl)"
+                ></v-img>
               </v-col>
               <v-col cols="5" class="text-left">
                 <h4>{{ game.title }}</h4>
