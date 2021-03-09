@@ -11,7 +11,7 @@
               <v-text-field
                 v-model="productName"
                 :rules="productNameRules"
-                label="Product Name"
+                label="Name"
                 required
                 prepend-inner-icon="mdi-alpha-a"
               ></v-text-field>
@@ -21,48 +21,46 @@
                 :rules="priceRules"
                 label="Price"
                 required
-                prepend-inner-icon="mdi-currency-usd "
+                prepend-inner-icon="mdi-currency-usd"
               ></v-text-field>
 
               <v-select
                 v-model="select"
                 :items="items"
-                :rules="[v => !!v || 'Item is required']"
-                label="Item"
+                :rules="[v => !!v || 'Category is required']"
+                label="Category"
                 required
+                prepend-inner-icon="mdi-shape-outline "
               ></v-select>
 
               <v-text-field
                 v-model="description"
-                :rules="priceRules"
+                :rules="[v => !!v || 'Description is required']"
                 label="Description"
                 required
                 prepend-inner-icon="mdi-information-variant "
               ></v-text-field>
 
-              <v-checkbox
-                v-model="checkbox"
-                :rules="[v => !!v || 'You must agree to continue!']"
-                label="Do you agree?"
-                required
-              ></v-checkbox>
-
-              <v-btn
-                :disabled="!valid"
-                color="success"
-                class="mr-4"
-                @click="validate"
-              >
-                Validate
-              </v-btn>
-
-              <v-btn color="error" class="mr-4" @click="reset">
-                Reset Form
-              </v-btn>
-
-              <v-btn color="warning" @click="resetValidation">
-                Reset Validation
-              </v-btn>
+              <v-file-input
+                v-model="fileObject"
+                :rules="fileInputRules"
+                accept="image/png, image/jpeg, image/bmp"
+                placeholder="Pick an image"
+                prepend-icon="mdi-file-image-outline"
+              ></v-file-input>
+              <v-row justify="center" class="mt-5">
+                <v-btn
+                  :disabled="!valid"
+                  color="success"
+                  class="mr-4"
+                  @click="validate"
+                >
+                  Validate
+                </v-btn>
+                <v-btn color="pink" class="mr-4" @click="reset">
+                  Reset Form
+                </v-btn>
+              </v-row>
             </v-form>
           </v-card>
         </v-col>
@@ -74,6 +72,7 @@
 <script>
 export default {
   data: () => ({
+    fileObject: null,
     valid: true,
     productName: "",
     productNameRules: [
@@ -82,15 +81,24 @@ export default {
     ],
     price: "",
     priceRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      v => !!v || "Price is required",
+      v => /^[1-9]+[0-9]*$/.test(v) || "Price must be valid"
     ],
     select: null,
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-    checkbox: false,
-    description: ""
+    description: "",
+    fileInputRules: [
+      value =>
+        !value ||
+        value.size < 2000000 ||
+        "Avatar size should be less than 2 MB!"
+    ]
   }),
-
+  watch: {
+    fileObject: function() {
+      console.log(this.fileObject);
+    }
+  },
   methods: {
     validate() {
       this.$refs.form.validate();
