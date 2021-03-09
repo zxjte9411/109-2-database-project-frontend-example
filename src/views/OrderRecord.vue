@@ -49,6 +49,7 @@
                     <span>{{ orderItem.Description }}</span>
                     <br />
                     <span>{{ currency }} {{ orderItem.Price }}</span>
+                    <span> x {{ orderItem.Amount }}</span>
                   </v-col>
                 </v-row>
               </v-col>
