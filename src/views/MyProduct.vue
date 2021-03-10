@@ -23,25 +23,28 @@
                 <v-col cols="3" class="text-left">
                   <span> {{ product.Description }}</span>
                 </v-col>
-                <v-col
-                  class="d-flex align-center \
-                  justify-space-around"
-                >
-                  <v-btn
-                    :disabled="IsAvailable(product)"
-                    color="success"
-                    @click="handleLaunchProduct(product)"
-                  >
-                    Open
-                  </v-btn>
-                  <v-btn
-                    :disabled="!IsAvailable(product)"
-                    color="pink"
-                    class="white--text"
-                    @click="handleOffProduct(product)"
-                  >
-                    Close
-                  </v-btn>
+                <v-col align-self="center">
+                  <v-row justify="center" class="mb-3">
+                    <v-btn
+                      :disabled="IsAvailable(product)"
+                      color="success"
+                      class="mr-2"
+                      @click="handleLaunchProduct(product)"
+                    >
+                      Open
+                    </v-btn>
+                    <v-btn
+                      :disabled="!IsAvailable(product)"
+                      color="pink"
+                      class="white--text"
+                      @click="handleOffProduct(product)"
+                    >
+                      Close
+                    </v-btn>
+                  </v-row>
+                  <v-row justify="center">
+                    <Replenishment :product="product" @init="init" />
+                  </v-row>
                 </v-col>
               </v-row>
             </v-list-item>
@@ -59,8 +62,12 @@
 <script>
 import { imgageHost } from "@/config/config";
 import { Getmyproduct, OffGame, LaunchGame } from "@/api/myproduct";
+import Replenishment from "@/components/Replenishment";
 
 export default {
+  components: {
+    Replenishment
+  },
   data() {
     return {
       products: [],
@@ -68,9 +75,14 @@ export default {
     };
   },
   async created() {
-    this.products = (await Getmyproduct()).data;
+    await this.init();
   },
   methods: {
+    async init() {
+      this.products = [];
+      this.products.length = 0;
+      this.products = (await Getmyproduct()).data;
+    },
     getImagePath(product) {
       if (!product) return "https://www.pixiv.net/artworks/86483702";
       return `${imgageHost}/${product.ImageURL.replace("./img/", "")}`;
