@@ -26,6 +26,9 @@
             </v-card-text>
 
             <v-card-actions>
+              <span>
+                Inventory：{{ games[(i - 1) * 3 + n - 1].Inventory }}
+              </span>
               <v-spacer></v-spacer>
               <v-btn
                 color="deep-purple lighten-2"
@@ -72,6 +75,7 @@ export default {
   async created() {
     await this.loadData();
     this.isLoading = false;
+    console.log(this.games);
   },
   methods: {
     async loadData() {

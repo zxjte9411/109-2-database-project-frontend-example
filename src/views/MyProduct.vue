@@ -5,18 +5,20 @@
         <h1>My Product</h1>
       </v-row>
       <v-row justify="center">
-        <v-card outlined max-width="900">
+        <v-card outlined max-width="1200">
           <template v-for="(product, index) in products">
             <v-list-item :key="index">
               <v-row class="my-1">
                 <v-col cols="3" align-self="center">
                   <v-img max-width="460px" :src="getImagePath(product)"></v-img>
                 </v-col>
-                <v-col cols="3" class="text-left">
+                <v-col cols="3" class="text-left" align-self="center">
                   <h4>{{ product.Name }}</h4>
                   <span>Price：{{ currency }} {{ product.Price }}</span>
                   <br />
                   <span>Sales volume：{{ product.Sales_volume }}</span>
+                  <br />
+                  <span>Inventory：{{ product.Inventory }}</span>
                 </v-col>
                 <v-col cols="3" class="text-left">
                   <span> {{ product.Description }}</span>
