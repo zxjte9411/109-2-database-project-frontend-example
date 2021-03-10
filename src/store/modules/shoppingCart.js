@@ -21,14 +21,14 @@ const actions = {
   resetCartState({ commit }) {
     commit("resetCartState");
   },
-  addProductToCart({ state, commit }, game) {
+  addProductToCart({ state, commit }, product) {
     commit("setCheckoutStatus", null);
-    if (game.Inventory > 0) {
-      const cartItem = state.items.find(item => item.id === game.Game_No);
+    if (product.Inventory > 0) {
+      const cartItem = state.items.find(item => item.id === product.Game_No);
       if (!cartItem) {
         commit("pushProductToCart", {
-          id: game.Game_No,
-          inventory: game.Inventory
+          id: product.Game_No,
+          inventory: product.Inventory
         });
       } else {
         commit("incrementItemQuantity", cartItem);
@@ -103,9 +103,11 @@ const mutations = {
 
 const getters = {
   CartItems: (state, getters, rootState) => {
-    if (rootState.games.items.length <= 0) return [];
+    if (rootState.products.items.length <= 0) return [];
     return state.items.map(({ id, quantity, inventory }) => {
-      const product = rootState.games.items.find(game => game.Game_No === id);
+      const product = rootState.products.items.find(
+        item => item.Game_No === id
+      );
       if (product)
         return {
           id: product.Game_No,

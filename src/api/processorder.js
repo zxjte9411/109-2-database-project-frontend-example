@@ -47,10 +47,10 @@ export const GetSalesAmount = async orderId => {
   }
 };
 
-export const UpdateSalesAmount = async (gameId, amount) => {
+export const UpdateSalesAmount = async (productId, amount) => {
   const formData = new FormData();
   formData.append("request", "updatesalesamount");
-  formData.append("gameno", gameId);
+  formData.append("gameno", productId);
   formData.append("amount", amount);
   try {
     const response = await axios.post("/php/processorder.php", formData);

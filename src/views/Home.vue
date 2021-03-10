@@ -85,9 +85,9 @@ export default {
         this.products.length < 3 ? 1 : this.products.length / 3
       );
     },
-    getImagePath(game) {
-      if (!game) return "https://www.pixiv.net/artworks/86483702";
-      return `${imgageHost}/${game.ImageURL.replace("./img/", "")}`;
+    getImagePath(product) {
+      if (!product) return "https://www.pixiv.net/artworks/86483702";
+      return `${imgageHost}/${product.ImageURL.replace("./img/", "")}`;
     },
     getColoumNumber(index) {
       const length = this.products.length;
@@ -95,8 +95,8 @@ export default {
       else if (length - index * 3 < 0) return length - index * 3 + 3;
       else return length - index * 3;
     },
-    addToCart(game) {
-      this.$store.dispatch("shoppingCart/addProductToCart", game);
+    addToCart(product) {
+      this.$store.dispatch("shoppingCart/addProductToCart", product);
     }
   }
 };

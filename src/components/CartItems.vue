@@ -11,7 +11,7 @@
           </v-banner>
         </v-list-item>
 
-        <template v-for="(game, index) in cartItems">
+        <template v-for="(item, index) in cartItems">
           <v-list-item :key="index">
             <v-row class="my-1">
               <v-col cols="1" align-self="center">
@@ -20,7 +20,7 @@
                   small
                   depressed
                   color="error"
-                  @click="remoItemFromShoopingCart(game)"
+                  @click="remoItemFromShoopingCart(item)"
                 >
                   <v-icon>mdi-trash-can-outline</v-icon>
                 </v-btn>
@@ -28,18 +28,18 @@
               <v-col cols="3">
                 <v-img
                   max-width="460px"
-                  :src="getImagePath(game.imageUrl)"
+                  :src="getImagePath(item.imageUrl)"
                 ></v-img>
               </v-col>
               <v-col cols="5" class="text-left" align-self="center">
-                <h4>{{ game.title }}</h4>
-                <span>{{ currency }} {{ game.price }}</span>
+                <h4>{{ item.title }}</h4>
+                <span>{{ currency }} {{ item.price }}</span>
                 <div class="input-group d-flex align-start">
                   <v-btn
                     class="my-btn"
                     depressed
-                    :disabled="game.quantity === 1"
-                    @click="decrease(game)"
+                    :disabled="item.quantity === 1"
+                    @click="decrease(item)"
                   >
                     <v-icon>mdi-minus</v-icon>
                   </v-btn>
@@ -48,13 +48,13 @@
                     type="text"
                     readonly
                     min="1"
-                    :value="game.quantity"
+                    :value="item.quantity"
                   />
                   <v-btn
                     class="my-btn"
                     depressed
-                    :disabled="game.inventory === game.quantity"
-                    @click="increment(game)"
+                    :disabled="item.inventory === item.quantity"
+                    @click="increment(item)"
                   >
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
@@ -62,7 +62,7 @@
               </v-col>
               <v-col cols="3" align-self="center">
                 <div class="mt-3 text-right">
-                  <span>{{ currency }} {{ GetItemSubTotal(game) }}</span>
+                  <span>{{ currency }} {{ GetItemSubTotal(item) }}</span>
                 </div>
               </v-col>
             </v-row>
@@ -102,14 +102,14 @@ export default {
     getImagePath(filename = "") {
       return `${imgageHost}/${filename.replace("./img/", "")}`;
     },
-    increment(game) {
-      this.$store.commit("shoppingCart/incrementItemQuantity", game);
+    increment(item) {
+      this.$store.commit("shoppingCart/incrementItemQuantity", item);
     },
-    decrease(game) {
-      this.$store.commit("shoppingCart/decrementItemQuantity", game);
+    decrease(item) {
+      this.$store.commit("shoppingCart/decrementItemQuantity", item);
     },
-    remoItemFromShoopingCart(game) {
-      this.$store.commit("shoppingCart/remoItemFromShoopingCart", game);
+    remoItemFromShoopingCart(item) {
+      this.$store.commit("shoppingCart/remoItemFromShoopingCart", item);
     }
   }
 };

@@ -1,4 +1,4 @@
-import { GetGamesByCategory } from "../../api/home";
+import { GetProductsByCategory } from "../../api/home";
 
 const state = {
   items: []
@@ -6,7 +6,7 @@ const state = {
 
 const actions = {
   async getAllItems({ commit }, category) {
-    const items = (await GetGamesByCategory(category)).data.data;
+    const items = (await GetProductsByCategory(category)).data.data;
     items.forEach(item => {
       item.Inventory = parseInt(item.Inventory);
     });

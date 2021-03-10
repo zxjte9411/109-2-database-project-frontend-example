@@ -14,7 +14,7 @@ export const GetCoupon = async () => {
   }
 };
 
-export const Checkout = async gameids => {
+export const Checkout = async productIds => {
   const userId = store.getters["login/Id"];
   const totalPrice = store.getters["shoppingCart/CartTotalPrice"];
   const coupon = store.getters["shoppingCart/SelectedCoupon"];
@@ -23,7 +23,7 @@ export const Checkout = async gameids => {
   formData.append("userno", userId);
   formData.append("total", totalPrice);
   formData.append("couponid", coupon ? coupon.Coupon_No : "");
-  formData.append("gameIds", JSON.stringify(gameids));
+  formData.append("gameIds", JSON.stringify(productIds));
   try {
     const response = await axios.post("/php/shoppingCart.php", formData);
     return response;

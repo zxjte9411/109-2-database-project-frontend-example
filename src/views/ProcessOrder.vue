@@ -109,9 +109,9 @@ export default {
     IsReadonly: finished => {
       return !(finished === "1");
     },
-    getImagePath(game) {
-      if (!game) return "https://www.pixiv.net/artworks/86483702";
-      return `${imgageHost}/${game.ImageURL.replace("./img/", "")}`;
+    getImagePath(product) {
+      if (!product) return "https://www.pixiv.net/artworks/86483702";
+      return `${imgageHost}/${product.ImageURL.replace("./img/", "")}`;
     },
     async initData() {
       this.orders = [];

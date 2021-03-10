@@ -11,10 +11,10 @@ export const Getmyproduct = async () => {
   }
 };
 
-export const OffGame = async gameId => {
+export const OffProduct = async productId => {
   const formData = new FormData();
   formData.append("request", "offgame");
-  formData.append("GameNo", gameId);
+  formData.append("GameNo", productId);
   try {
     const response = await axios.post("/php/myproduct.php", formData);
     return response.data;
@@ -23,10 +23,10 @@ export const OffGame = async gameId => {
   }
 };
 
-export const LaunchGame = async gameId => {
+export const LaunchProduct = async productId => {
   const formData = new FormData();
   formData.append("request", "launchgame");
-  formData.append("GameNo", gameId);
+  formData.append("GameNo", productId);
   try {
     const response = await axios.post("/php/myproduct.php", formData);
     return response.data;

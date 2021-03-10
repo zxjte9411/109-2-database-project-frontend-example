@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const GetGamesByCategory = async function(category = "all") {
+export const GetProductsByCategory = async function(category = "all") {
   if (category === null || category === undefined) category = "all";
   const formData = new FormData();
   formData.append("request", "getgamedata");

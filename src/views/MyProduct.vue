@@ -61,7 +61,7 @@
 
 <script>
 import { imgageHost } from "@/config/config";
-import { Getmyproduct, OffGame, LaunchGame } from "@/api/myproduct";
+import { Getmyproduct, OffProduct, LaunchProduct } from "@/api/myproduct";
 import Replenishment from "@/components/Replenishment";
 
 export default {
@@ -92,12 +92,12 @@ export default {
     },
     async handleOffProduct(product) {
       if (product !== undefined && product !== null)
-        await OffGame(product.Game_No);
+        await OffProduct(product.Game_No);
       this.products = (await Getmyproduct()).data;
     },
     async handleLaunchProduct(product) {
       if (product !== undefined && product !== null)
-        await LaunchGame(product.Game_No);
+        await LaunchProduct(product.Game_No);
       this.products = (await Getmyproduct()).data;
     }
   }
