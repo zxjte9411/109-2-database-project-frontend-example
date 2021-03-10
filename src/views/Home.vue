@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     async loadData() {
-      await this.$store.dispatch("products/getAllGames", this.category);
+      await this.$store.dispatch("products/getAllItems", this.category);
       this.rowSize = Math.ceil(
         this.products.length < 3 ? 1 : this.products.length / 3
       );

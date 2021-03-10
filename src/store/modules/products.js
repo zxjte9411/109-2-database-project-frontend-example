@@ -5,17 +5,17 @@ const state = {
 };
 
 const actions = {
-  async getAllGames({ commit }, category) {
+  async getAllItems({ commit }, category) {
     const items = (await GetGamesByCategory(category)).data.data;
-    items.forEach(element => {
-      element.Inventory = parseInt(element.Inventory);
+    items.forEach(item => {
+      item.Inventory = parseInt(item.Inventory);
     });
-    commit("setGames", items);
+    commit("setItems", items);
   }
 };
 
 const mutations = {
-  setGames(state, items) {
+  setItems(state, items) {
     state.items = items;
   },
   decrementProductInventory(state, { Game_No }) {
