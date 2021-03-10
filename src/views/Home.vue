@@ -75,7 +75,6 @@ export default {
   async created() {
     await this.loadData();
     this.isLoading = false;
-    console.log(this.games);
   },
   methods: {
     async loadData() {
