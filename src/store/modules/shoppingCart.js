@@ -26,7 +26,10 @@ const actions = {
     if (game.Inventory > 0) {
       const cartItem = state.items.find(item => item.id === game.Game_No);
       if (!cartItem) {
-        commit("pushProductToCart", { id: game.Game_No });
+        commit("pushProductToCart", {
+          id: game.Game_No,
+          inventory: game.Inventory
+        });
       } else {
         commit("incrementItemQuantity", cartItem);
       }
@@ -62,16 +65,17 @@ const mutations = {
   setCheckoutStatus(state, status) {
     state.checkoutStatus = status;
   },
-  pushProductToCart(state, { id }) {
+  pushProductToCart(state, { id, inventory }) {
     state.items.push({
       id,
+      inventory,
       quantity: 1
     });
     localStorage.setItem("cart", JSON.stringify(state));
   },
   incrementItemQuantity(state, { id }) {
     const cartItem = state.items.find(item => item.id === id);
-    cartItem.quantity++;
+    if (cartItem.inventory > cartItem.quantity) cartItem.quantity++;
     localStorage.setItem("cart", JSON.stringify(state));
   },
   decrementItemQuantity(state, { id }) {
@@ -100,7 +104,7 @@ const mutations = {
 const getters = {
   CartItems: (state, getters, rootState) => {
     if (rootState.games.items.length <= 0) return [];
-    return state.items.map(({ id, quantity }) => {
+    return state.items.map(({ id, quantity, inventory }) => {
       const product = rootState.games.items.find(game => game.Game_No === id);
       if (product)
         return {
@@ -108,7 +112,8 @@ const getters = {
           title: product.Name,
           price: product.Price,
           imageUrl: product.ImageURL,
-          quantity
+          quantity,
+          inventory
         };
     });
   },
