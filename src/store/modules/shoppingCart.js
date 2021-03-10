@@ -35,7 +35,7 @@ const actions = {
       }
       // remove 1 item from stock
       // commit(
-      //   "games/decrementProductInventory",
+      //   "products/decrementProductInventory",
       //   { id: item.Game_No },
       //   { root: true }
       // );

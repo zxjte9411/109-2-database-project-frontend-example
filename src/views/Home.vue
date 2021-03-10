@@ -13,27 +13,29 @@
               ><v-img
                 contain
                 max-height="250"
-                :src="getImagePath(games[(i - 1) * 3 + n - 1])"
+                :src="getImagePath(products[(i - 1) * 3 + n - 1])"
             /></a>
-            <v-card-title>{{ games[(i - 1) * 3 + n - 1].Name }}</v-card-title>
+            <v-card-title>{{
+              products[(i - 1) * 3 + n - 1].Name
+            }}</v-card-title>
             <v-card-subtitle class="text-start">
-              NT$ {{ games[(i - 1) * 3 + n - 1].Price }}
+              NT$ {{ products[(i - 1) * 3 + n - 1].Price }}
             </v-card-subtitle>
             <v-card-text>
               <div class="text-left">
-                {{ games[(i - 1) * 3 + n - 1].Description }}
+                {{ products[(i - 1) * 3 + n - 1].Description }}
               </div>
             </v-card-text>
 
             <v-card-actions>
               <span>
-                Inventory：{{ games[(i - 1) * 3 + n - 1].Inventory }}
+                Inventory：{{ products[(i - 1) * 3 + n - 1].Inventory }}
               </span>
               <v-spacer></v-spacer>
               <v-btn
                 color="deep-purple lighten-2"
                 text
-                @click="addToCart(games[(i - 1) * 3 + n - 1])"
+                @click="addToCart(products[(i - 1) * 3 + n - 1])"
               >
                 Add to Cart
               </v-btn>
@@ -62,7 +64,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ games: "games/Items" })
+    ...mapGetters({ products: "products/Items" })
   },
   watch: {
     $route: async function() {
@@ -78,9 +80,9 @@ export default {
   },
   methods: {
     async loadData() {
-      await this.$store.dispatch("games/getAllGames", this.category);
+      await this.$store.dispatch("products/getAllGames", this.category);
       this.rowSize = Math.ceil(
-        this.games.length < 3 ? 1 : this.games.length / 3
+        this.products.length < 3 ? 1 : this.products.length / 3
       );
     },
     getImagePath(game) {
@@ -88,7 +90,7 @@ export default {
       return `${imgageHost}/${game.ImageURL.replace("./img/", "")}`;
     },
     getColoumNumber(index) {
-      const length = this.games.length;
+      const length = this.products.length;
       if ((length - index * 3) % 3 >= 0) return 3;
       else if (length - index * 3 < 0) return length - index * 3 + 3;
       else return length - index * 3;

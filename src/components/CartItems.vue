@@ -68,7 +68,7 @@
             </v-row>
           </v-list-item>
           <v-divider
-            v-if="index < games.length"
+            v-if="index < products.length"
             :key="index + Date.now()"
           ></v-divider>
         </template>
@@ -93,7 +93,7 @@ export default {
     return { currency: "NT$" };
   },
   computed: {
-    ...mapGetters({ games: "games/Items" }),
+    ...mapGetters({ products: "products/Items" }),
     ...mapGetters({ CartTotalPrice: "shoppingCart/CartTotalPrice" }),
     ...mapGetters({ GetItemSubTotal: "shoppingCart/GetItemSubTotal" }),
     ...mapGetters({ cartItems: "shoppingCart/CartItems" })

@@ -61,7 +61,7 @@ export default {
     ...mapGetters({ ErrorMessage: "shoppingCart/ErrorMessage" })
   },
   async created() {
-    await this.$store.dispatch("games/getAllGames");
+    await this.$store.dispatch("products/getAllGames");
     await this.$store.dispatch("shoppingCart/GetCoupon");
     this.isLoading = false;
   },
