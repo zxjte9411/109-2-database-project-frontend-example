@@ -50,7 +50,12 @@
                     min="1"
                     :value="game.quantity"
                   />
-                  <v-btn class="my-btn" depressed @click="increment(game)">
+                  <v-btn
+                    class="my-btn"
+                    depressed
+                    :disabled="game.inventory === game.quantity"
+                    @click="increment(game)"
+                  >
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
                 </div>
