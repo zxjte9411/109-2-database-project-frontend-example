@@ -22,7 +22,7 @@ export const Checkout = async productIds => {
   formData.append("request", "purchaseshoppingcart");
   formData.append("userno", userId);
   formData.append("total", totalPrice);
-  formData.append("couponid", coupon ? coupon.Coupon_No : "");
+  formData.append("couponid", coupon ? coupon.ID : "");
   formData.append("gameIds", JSON.stringify(productIds));
   try {
     const response = await axios.post("/php/shoppingCart.php", formData);

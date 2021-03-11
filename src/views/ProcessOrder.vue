@@ -140,7 +140,10 @@ export default {
       this.$store.dispatch("wallet/init");
       const salesamount = (await GetSalesAmount(item.OrderID)).data;
       for (const i in salesamount) {
-        await UpdateSalesAmount(salesamount[i].ID, salesamount[i].Amount);
+        await UpdateSalesAmount(
+          salesamount[i].ProductID,
+          salesamount[i].Amount
+        );
       }
       await this.initData();
     },
