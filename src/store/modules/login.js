@@ -79,7 +79,7 @@ const getters = {
 };
 
 const handleLoginResponse = async (commit, res) => {
-  const userId = (await GetUserId()).data;
+  const userId = (await GetUserId()).data.userno;
   let allCookies = document.cookie;
   const data = (await res).data;
   if (data.msg !== "success") return false;

@@ -66,7 +66,7 @@ export const PublishProduct = async product => {
 export const Replenishment = async (product, inventory) => {
   const formData = new FormData();
   formData.append("request", "replenishment");
-  formData.append("GameNo", product.Game_No);
+  formData.append("GameNo", product.id);
   formData.append("inventory", inventory);
   try {
     const response = await axios.post("/php/myproduct.php", formData);

@@ -92,12 +92,12 @@ export default {
     },
     async handleOffProduct(product) {
       if (product !== undefined && product !== null)
-        await OffProduct(product.Game_No);
+        await OffProduct(product.id);
       this.products = (await Getmyproduct()).data;
     },
     async handleLaunchProduct(product) {
       if (product !== undefined && product !== null)
-        await LaunchProduct(product.Game_No);
+        await LaunchProduct(product.id);
       this.products = (await Getmyproduct()).data;
     }
   }

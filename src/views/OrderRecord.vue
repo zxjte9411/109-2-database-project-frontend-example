@@ -21,7 +21,7 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <v-list-item-title class="mb-2">
-                    Order Id：{{ item.Order_No }}
+                    Order Id：{{ item.ID }}
                   </v-list-item-title>
                   <v-list-item-subtitle class="mb-2">
                     Order Date：{{ item.Date }}
@@ -30,17 +30,14 @@
                     Cost：{{ item.Price }}
                   </v-list-item-subtitle>
                   <v-list-item-subtitle>
-                    Discount：{{ item.Coupon_Amount }}
+                    Discount：{{ item.Coupon_Amount ? item.Coupon_Amount : 0 }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-col>
-                <v-row
-                  v-for="(orderItem, j) in orderItems"
-                  :key="j + item.Order_No"
-                >
+                <v-row v-for="(orderItem, j) in orderItems" :key="j + item.ID">
                   <v-col cols="3" class="mr-2 d-flex align-center">
                     <v-img :src="getImagePath(orderItem)"></v-img>
                   </v-col>
@@ -82,7 +79,7 @@ export default {
     clickedItem: async function() {
       if (this.clickedItem !== undefined) {
         this.orderItems = (
-          await GetOrderItems(this.orders[this.clickedItem].Order_No)
+          await GetOrderItems(this.orders[this.clickedItem].ID)
         ).data;
       } else {
         this.orderItems.length = 0;

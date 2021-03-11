@@ -24,10 +24,10 @@ const actions = {
   addProductToCart({ state, commit }, product) {
     commit("setCheckoutStatus", null);
     if (product.Inventory > 0) {
-      const cartItem = state.items.find(item => item.id === product.Game_No);
+      const cartItem = state.items.find(item => item.id === product.ID);
       if (!cartItem) {
         commit("pushProductToCart", {
-          id: product.Game_No,
+          id: product.ID,
           inventory: product.Inventory
         });
       } else {
@@ -36,7 +36,7 @@ const actions = {
       // remove 1 item from stock
       // commit(
       //   "products/decrementProductInventory",
-      //   { id: item.Game_No },
+      //   { id: item.ID },
       //   { root: true }
       // );
     }
@@ -105,12 +105,10 @@ const getters = {
   CartItems: (state, getters, rootState) => {
     if (rootState.products.items.length <= 0) return [];
     return state.items.map(({ id, quantity, inventory }) => {
-      const product = rootState.products.items.find(
-        item => item.Game_No === id
-      );
+      const product = rootState.products.items.find(item => item.ID === id);
       if (product)
         return {
-          id: product.Game_No,
+          id: product.ID,
           title: product.Name,
           price: product.Price,
           imageUrl: product.ImageURL,

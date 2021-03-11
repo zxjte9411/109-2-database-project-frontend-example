@@ -18,7 +18,7 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <v-list-item-title class="mb-2">
-                    Order Id：{{ item.Order_No }}
+                    Order Id：{{ item.OrderID }}
                   </v-list-item-title>
                   <v-list-item-subtitle class="mb-2">
                     Order Date：{{ item.Date }}
@@ -33,7 +33,7 @@
               <v-col>
                 <v-row
                   v-for="(orderItem, j) in orderItems"
-                  :key="j + item.Order_No"
+                  :key="j + item.OrderID"
                 >
                   <v-col cols="3" class="mr-2 d-flex align-center">
                     <v-img :src="getImagePath(orderItem)"></v-img>
@@ -93,9 +93,9 @@ export default {
     clickedItem: async function() {
       if (this.clickedItem !== undefined) {
         this.orderItems = (
-          await GetOrderItems(this.orders[this.clickedItem].Order_No)
+          await GetOrderItems(this.orders[this.clickedItem].OrderID)
         ).data;
-        this.handleDataMap(this.orders[this.clickedItem].Order_No);
+        this.handleDataMap(this.orders[this.clickedItem].OrderID);
       } else {
         this.orderItems.length = 0;
         this.orderItems = [];
@@ -120,7 +120,7 @@ export default {
       let data = [];
       for (const i in this.orders) {
         data.push(
-          GetOrderInformation(this.orders[i].Order_No)
+          GetOrderInformation(this.orders[i].OrderID)
             .then(response => response.data)
             .catch(err => err)
         );
@@ -135,21 +135,19 @@ export default {
       this.orders.reverse();
     },
     async handleConfirm(item) {
-      await UpdateOrder(item.Order_No);
+      await UpdateOrder(item.OrderID);
       await UpdateProfit(item.Price);
       this.$store.dispatch("wallet/init");
-      const salesamount = (await GetSalesAmount(item.Order_No)).data;
+      const salesamount = (await GetSalesAmount(item.OrderID)).data;
       for (const i in salesamount) {
-        await UpdateSalesAmount(salesamount[i].Game_No, salesamount[i].Amount);
+        await UpdateSalesAmount(salesamount[i].ID, salesamount[i].Amount);
       }
       await this.initData();
     },
     async handleDataMap(orderId) {
       const salesamount = (await GetSalesAmount(orderId)).data;
       const temp = this.orderItems.map(function(item) {
-        const product = salesamount.find(
-          element => element.Game_No === item.Game_No
-        );
+        const product = salesamount.find(element => element.ID === item.ID);
         item.Amount = product.Amount;
         return item;
       });

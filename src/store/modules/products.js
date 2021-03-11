@@ -18,8 +18,8 @@ const mutations = {
   setItems(state, items) {
     state.items = items;
   },
-  decrementProductInventory(state, { Game_No }) {
-    const item = state.items.find(item => item.id === Game_No);
+  decrementProductInventory(state, { ID }) {
+    const item = state.items.find(item => item.id === ID);
     item.Inventory--;
   }
 };
