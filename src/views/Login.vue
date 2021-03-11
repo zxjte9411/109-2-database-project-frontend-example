@@ -68,6 +68,7 @@ export default {
         await this.$store
           .dispatch("login/login", [this.user.email, this.user.password])
           .then(() => {
+            this.$store.dispatch("wallet/init");
             if (this.$store.getters["login/Role"] === "seller")
               this.$router.push("/myproduct");
             else this.$router.push("/home");
