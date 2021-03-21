@@ -1,4 +1,4 @@
-# bss-frontend
+# 109-2-database-project-frontend-example
 
 ## Project Init
 ```
