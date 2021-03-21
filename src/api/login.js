@@ -23,3 +23,14 @@ export const GetUserId = async () => {
     console.log(err);
   }
 };
+
+export const Logout = async () => {
+  const formData = new FormData();
+  formData.append("request", "logout");
+  try {
+    const response = await axios.post("/php/login.php", formData);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};

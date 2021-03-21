@@ -1,4 +1,4 @@
-import { Login, GetUserId } from "@/api/login.js";
+import { Login, GetUserId, Logout } from "@/api/login.js";
 const getDefaultState = () => {
   return localStorage.getItem("user")
     ? { user: JSON.parse(localStorage.getItem("user")) }
@@ -43,10 +43,11 @@ const actions = {
   },
   logout({ commit /*, dispatch*/ }) {
     localStorage.removeItem("user");
-    // unmark to clean shooping cart
+    // unmark to clean shooping cart after logout
     // localStorage.removeItem("cart");
     // dispatch("shoppingCart/resetCartState", null, { root: true });
     commit("reSetLoginState");
+    Logout();
   }
 };
 const mutations = {
