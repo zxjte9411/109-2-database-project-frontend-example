@@ -1,5 +1,10 @@
 # bss-frontend
 
+## Project Init
+```
+npm install -g @vue/cli
+```
+
 ## Project setup
 ```
 npm install
