@@ -31,7 +31,7 @@
 
               <v-select
                 v-model="selectedCategory"
-                :items="category"
+                :items="categories"
                 :rules="[v => !!v || 'Category is required']"
                 label="Category"
                 required
@@ -82,6 +82,7 @@
 
 <script>
 import { UploadFile, PublishProduct } from "@/api/myproduct";
+import { GetProductsCategories } from "@/api/home";
 
 export default {
   data: () => ({
@@ -97,7 +98,7 @@ export default {
       v => /^[1-9]+[0-9]*$/.test(v) || "Price must be valid"
     ],
     selectedCategory: null,
-    category: ["single", "battle", "multi"],
+    categories: [],
     description: "",
     inventory: "",
     inventoryRules: [
@@ -110,9 +111,12 @@ export default {
       value =>
         !value ||
         value.size < 5000000 ||
-        "Avatar size should be less than 2 MB!"
+        "Avatar size should be less than 5 MB!"
     ]
   }),
+  async created() {
+    this.categories = (await GetProductsCategories()).categories;
+  },
   // watch: {
   //   fileObject: function() {
   //     console.log(this.fileObject);

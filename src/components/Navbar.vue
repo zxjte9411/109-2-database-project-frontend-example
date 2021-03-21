@@ -87,24 +87,15 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link class="my-router-link" to="/home?category=single">
+        <router-link
+          v-for="(category, i) in categories"
+          :key="i"
+          class="my-router-link"
+          :to="getUrl(category)"
+        >
           <v-list-item link>
             <v-list-item-content>
-              <v-list-item-title>single-player</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
-        <router-link class="my-router-link" to="/home?category=multi">
-          <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title>Multiplayer</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
-        <router-link class="my-router-link" to="/home?category=battle">
-          <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title>Battle Game</v-list-item-title>
+              <v-list-item-title>{{ titleCase(category) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -117,19 +108,26 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+import { GetProductsCategories } from "@/api/home";
 export default {
   data() {
-    return {};
+    return {
+      categories: []
+    };
   },
   computed: {
     ...mapGetters({ isLogin: "login/IsLogin" }),
     ...mapGetters({ CartItemLength: "shoppingCart/CartItemLength" }),
     ...mapGetters({ IsSeller: "login/IsSeller" }),
-    ...mapGetters({ moneyInfo: "wallet/GetWallet" })
+    ...mapGetters({ moneyInfo: "wallet/GetWallet" }),
+    getUrl: () =>
+      function(category) {
+        return `/home?category=${category}`;
+      }
   },
   async created() {
     await this.$store.dispatch("wallet/init");
+    this.categories = (await GetProductsCategories()).categories;
   },
   methods: {
     logout() {
@@ -137,6 +135,10 @@ export default {
       this.$router.push("/home").catch(err => {
         err;
       });
+    },
+    titleCase(str) {
+      const newStr = str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+      return newStr;
     }
   }
 };

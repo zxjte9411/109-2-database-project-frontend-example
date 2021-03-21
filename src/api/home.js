@@ -12,3 +12,15 @@ export const GetProductsByCategory = async function(category = "all") {
     console.log(err);
   }
 };
+
+export const GetProductsCategories = async function(category = "all") {
+  if (category === null || category === undefined) category = "all";
+  try {
+    const response = await axios.get(
+      `/php/home.php?request=getproductcategories`
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
