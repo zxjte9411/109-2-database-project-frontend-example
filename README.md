@@ -1,4 +1,4 @@
-# gamlabdb-frontend
+# bss-frontend
 
 ## Project setup
 ```
