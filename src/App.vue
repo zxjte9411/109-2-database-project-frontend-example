@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <NavBar />
       <v-footer absolute dark horizontal class="d-flex justify-center">
-        <span class="my-3">Copyright © GAMLAB</span>
+        <span class="my-3">Copyright © BSS</span>
       </v-footer>
     </v-app>
   </div>
