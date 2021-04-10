@@ -95,7 +95,7 @@ export default {
         this.orderItems = (
           await GetOrderItems(this.orders[this.clickedItem].OrderID)
         ).data;
-        this.handleDataMap(this.orders[this.clickedItem].OrderID);
+        // this.handleDataMap(this.orders[this.clickedItem].OrderID);
       } else {
         this.orderItems.length = 0;
         this.orderItems = [];
